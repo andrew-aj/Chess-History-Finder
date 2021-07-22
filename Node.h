@@ -12,7 +12,6 @@ namespace Chess {
         std::vector<ZobristHash *> keys;
         std::vector<Node *> children;
         bool leaf = false;
-        bool root = false;
 
         Node() {
             keys.reserve(m - 1);
@@ -20,7 +19,7 @@ namespace Chess {
         }
 
         //Probably going to change this logic to make it simpler
-        bool hasCorrectChildren() {
+        /*bool hasCorrectChildren() {
             if ((leaf && !root) || (root && !leaf && children.size() >= 2))
                 return true;
             else if (children.empty())
@@ -31,7 +30,7 @@ namespace Chess {
 
         bool hasCorrectKeys() {
             return keys.size() < m;
-        }
+        }*/
 
 
 
