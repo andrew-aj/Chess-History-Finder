@@ -19,7 +19,19 @@ namespace Chess {
         }
 
         int binarySearch(hash Data){
-
+            int low = 0;
+            int high = keys.size()-1;
+            int middle = 0;
+            while (low <= high){
+                middle = (low + high) / 2;
+                if (Data == keys[middle]->Data)
+                    return middle;
+                else if (Data > keys[middle]->Data)
+                    low = middle + 1;
+                else
+                    high = middle - 1;
+            }
+            return middle;
         }
 
         //Probably going to change this logic to make it simpler
