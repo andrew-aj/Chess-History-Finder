@@ -16,6 +16,8 @@ namespace Chess {
 
         Node* findNode(hash Data);
 
+        Node* findNode(hash Data, Node* node);
+
     private:
         Node* root;
     };

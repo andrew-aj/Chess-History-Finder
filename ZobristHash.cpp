@@ -29,4 +29,10 @@ namespace Chess {
     void ZobristHash::generateRandomNumbers() {
 
     }
+
+    ZobristHash::ZobristHash(hash data, std::vector<NextMove> &bestWhite, std::vector<NextMove> &bestBlack) {
+        this->Data = data;
+        this->bestWhite = bestWhite;
+        this->bestBlack = bestBlack;
+    }
 }

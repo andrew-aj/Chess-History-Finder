@@ -18,6 +18,10 @@ namespace Chess {
             children.reserve(m);
         }
 
+        int binarySearch(hash Data){
+
+        }
+
         //Probably going to change this logic to make it simpler
         /*bool hasCorrectChildren() {
             if ((leaf && !root) || (root && !leaf && children.size() >= 2))
