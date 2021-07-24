@@ -1,13 +1,10 @@
-#ifndef CHESSHISTORYFINDER_DEFINES_H
-#define CHESSHISTORYFINDER_DEFINES_H
+#pragma once
 
 #include <cstdint>
 
 namespace Chess {
 
-    using hash = uint64_t;
-    #define m 5
+    using hash = uint64_t; // An int with a fixed width of 64 bits.
+    #define m 5 // The degree of the B-tree.
 
 }
-
-#endif //CHESSHISTORYFINDER_DEFINES_H
