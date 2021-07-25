@@ -14,8 +14,8 @@ namespace Chess {
         bool leaf = false;
 
         Node() {
-            keys.reserve(m - 1);
-            children.reserve(m);
+            keys.reserve(order - 1);
+            children.reserve(order);
         }
 
         int binarySearch(hash Data){
@@ -31,6 +31,10 @@ namespace Chess {
                 else
                     high = middle - 1;
             }
+            if (Data > keys[middle]->Data && middle == keys.size() - 1)
+                return keys.size();
+            else if (Data > keys[middle]->Data && Data < keys[middle+1]->Data)
+                return middle+1;
             return middle;
         }
 
