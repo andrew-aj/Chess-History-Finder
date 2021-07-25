@@ -15,19 +15,22 @@ namespace Chess{
         insertHash(hash);
     }
 
-    Node *BTree::findNode(hash Data) {
-        return findNode(Data, root);
+    ZobristHash *BTree::findHash(hash Data) {
+        return findHash(Data, root);
     }
 
-    Node *BTree::findNode(hash Data, Node *node) {
+    ZobristHash *BTree::findHash(hash Data, Node *node) {
         if (node == nullptr)
             return nullptr;
 
-        int loc = 0;
-        for (int i = 0; i < node->keys.size(); i++) {
-            if (node->keys[i]->Data >= Data){
-                
-            }
+        int loc = node->binarySearch(Data);
+        if (node->keys[loc]->Data != Data){
+            if (node->children.size() <= loc)
+                return nullptr;
+            else
+                return findHash(Data, node->children[loc]);
+        } else{
+            return node->keys[loc];
         }
     }
 

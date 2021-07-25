@@ -10,16 +10,16 @@ namespace Chess {
     public:
         BTree();
 
-        void insertHash(ZobristHash* pointer);
+        void insertHash(ZobristHash *pointer);
 
-        void insertHash(hash Data, std::vector<NextMove>& bestWhite, std::vector<NextMove>& bestBlack);
+        void insertHash(hash Data, std::vector<NextMove> &bestWhite, std::vector<NextMove> &bestBlack);
 
-        Node* findNode(hash Data);
+        ZobristHash *findHash(hash Data);
 
-        Node* findNode(hash Data, Node* node);
+        ZobristHash *findHash(hash Data, Node *node);
 
     private:
-        Node* root;
+        Node *root;
     };
 
 }
