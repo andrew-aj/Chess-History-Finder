@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(SFML 2.5.1 COMPONENTS graphics window system REQUIRED)
 
 file(GLOB ChessHistoryFinder "*.cpp" "*.h")
-add_executable(ChessHistoryFinder ${ChessHistoryFinder})
+add_executable(ChessHistoryFinder ${ChessHistoryFinder} Board.cpp Board.h TextureManager.cpp TextureManager.h)
 target_link_libraries(ChessHistoryFinder sfml-graphics sfml-window sfml-system)
