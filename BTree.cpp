@@ -43,16 +43,21 @@ namespace Chess {
                     if (t->keys.empty())
                         loc = 0;
                     else
-                        loc = t->binarySearch(temp->keys[mid]->Data);
-                    t->keys.insert(t->keys.begin() + loc, temp->keys[mid]);
+                        loc = t->binarySearch(top->keys[mid]->Data);
+                    t->keys.insert(t->keys.begin() + loc, top->keys[mid]);
                     Node *newNode = new Node();
                     t->children.insert(t->children.begin() + loc + 1, newNode);
-                    //std::copy(temp->keys.begin() + mid + 1, temp->keys.end(), newNode->keys.begin()); why no work
-                    for(int i = mid + 1; i < temp->keys.size(); i++){
-                        newNode->keys.push_back(temp->keys[i]);
+                    //std::copy(top->keys.begin() + mid + 1, top->keys.end(), newNode->keys.begin()); why no work
+                    for (int i = mid + 1; i < top->keys.size(); i++) {
+                        newNode->keys.push_back(top->keys[i]);
                     }
-                    temp->keys.erase(temp->keys.begin() + mid, temp->keys.end());
-                    temp->keys.reserve(order);
+                    for (int i = mid + 1; i < top->children.size(); i++) {
+                        newNode->children.push_back(top->children[i]);
+                    }
+                    top->keys.erase(top->keys.begin() + mid, top->keys.end());
+                    top->keys.reserve(order);
+                    top->children.erase(top->children.begin() + mid + 1, top->children.end());
+                    top->children.reserve(order + 1);
                 }
             }
         }

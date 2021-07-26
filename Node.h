@@ -23,7 +23,7 @@ namespace Chess {
 
         Node(int size, bool l) {
             keys.reserve(size);
-            children.reserve(size);
+            children.reserve(size+1);
             leaf = l;
         }
 
