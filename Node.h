@@ -11,18 +11,27 @@ namespace Chess {
     struct Node {
         std::vector<ZobristHash *> keys;
         std::vector<Node *> children;
-        bool leaf = false;
+        bool leaf;
 
-        Node() {
-            keys.reserve(order - 1);
-            children.reserve(order);
+        Node() : Node(order, true) {
+
         }
 
-        int binarySearch(hash Data){
+        Node(bool l) : Node(order, l) {
+
+        }
+
+        Node(int size, bool l) {
+            keys.reserve(size);
+            children.reserve(size);
+            leaf = l;
+        }
+
+        int binarySearch(hash Data) {
             int low = 0;
-            int high = keys.size()-1;
+            int high = keys.size() - 1;
             int middle = 0;
-            while (low <= high){
+            while (low <= high) {
                 middle = (low + high) / 2;
                 if (Data == keys[middle]->Data)
                     return middle;
@@ -33,8 +42,8 @@ namespace Chess {
             }
             if (Data > keys[middle]->Data && middle == keys.size() - 1)
                 return keys.size();
-            else if (Data > keys[middle]->Data && Data < keys[middle+1]->Data)
-                return middle+1;
+            else if (Data > keys[middle]->Data && Data < keys[middle + 1]->Data)
+                return middle + 1;
             return middle;
         }
 

@@ -4,6 +4,8 @@
 #include "Node.h"
 #include "Defines.h"
 
+#include <stack>
+
 namespace Chess {
 
     class BTree {
