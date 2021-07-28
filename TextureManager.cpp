@@ -5,6 +5,8 @@
 #include "TextureManager.h"
 
 namespace Chess{
+    unordered_map<string, sf::Texture> TextureManager::textures;
+
     void TextureManager::LoadTexture(string fileName) {
         string path = "./images/";
         path += fileName + ".png";
@@ -19,6 +21,10 @@ namespace Chess{
 
     void TextureManager::Clear() {
         textures.clear();
+    }
+
+    void TextureManager::LoadPieces() {
+
     }
 
 }

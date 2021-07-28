@@ -27,7 +27,7 @@ namespace Chess{
         void setBoard();
 
         void draw(sf::RenderWindow& window);
-        void UpdateBlackWhite()
+        void UpdateBlackWhite();
     };
 }
 
