@@ -5,6 +5,9 @@
 
 #include <array>
 #include <vector>
+#include <algorithm>
+#include <random>
+#include <execution>
 
 #include "Defines.h"
 #include "NextMove.h"
@@ -23,6 +26,8 @@ namespace Chess {
 
         //Generates the random numbers to create zobrist hashes
         static void generateRandomNumbers();
+
+        static bool initialized();
 
         ZobristHash();
 
