@@ -5,12 +5,17 @@
 #ifndef CHESSHISTORYFINDER_TEXTUREMANAGER_H
 #define CHESSHISTORYFINDER_TEXTUREMANAGER_H
 
-#include <SFML/Graphics.hpp>
 #include <unordered_map>
 #include <string>
+#include <iostream>
+#include <filesystem>
+#include <SFML/Graphics.hpp>
 
 using std::string;
 using std::unordered_map;
+using std::cout;
+using std::endl;
+using std::filesystem::directory_iterator;
 
 namespace Chess{
     class TextureManager{
@@ -21,7 +26,7 @@ namespace Chess{
     public:
         static sf::Texture& GetTexture(string TextureName);
         static void Clear(); //call me at the end of main
-        static void LoadPieces();
+        static void LoadImages();
 
     };
 }

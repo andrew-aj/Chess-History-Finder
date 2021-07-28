@@ -23,7 +23,11 @@ namespace Chess{
         textures.clear();
     }
 
-    void TextureManager::LoadPieces() {
+    void TextureManager::LoadImages() {
+        string path = "./images/";
+
+        for(auto const& file : directory_iterator(path))
+            cout << file.path() << endl;
 
     }
 

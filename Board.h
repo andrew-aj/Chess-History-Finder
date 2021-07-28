@@ -22,6 +22,9 @@ namespace Chess{
         Sprite Knight;
 
     public:
+        /*CONSTRUCTORS*/
+        Board();
+
         /*BOARD INITIALIZERS*/
         void LoadTextures();
         void setBoard();
