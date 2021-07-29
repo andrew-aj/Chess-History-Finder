@@ -27,6 +27,7 @@ namespace Chess {
         std::array<Pieces, 64> board;
 
         hash storage;
+        bool whiteWon;
 
         bool blackToMove;
 
