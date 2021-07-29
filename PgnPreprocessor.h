@@ -4,12 +4,12 @@
 #include "NextMove.h"
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <set>
 using std::string;
 using std::vector;
 using std::pair;
-using std::map;
+using std::unordered_map;
 using std::multiset;
 
 namespace Chess {
@@ -20,7 +20,7 @@ namespace Chess {
             NextMove next;
         };
 
-        map<hash, multiset<NextMove>> hashStorage; // Multiset keeps track of how many times a NextMove occurs.
+        unordered_map<hash, multiset<NextMove>> hashStorage; // Multiset keeps track of how many times a NextMove occurs.
     public:
         void readFile(const string& fileName);
     };
