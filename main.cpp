@@ -1,5 +1,7 @@
 #include <iostream>
+#include "ChessHistoryFinder.h"
+
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    Chess::ChessHistoryFinder program;
+    program.startProgramWindow();
 }
