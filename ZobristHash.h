@@ -1,7 +1,4 @@
-
-
-#ifndef CHESSHISTORYFINDER_ZOBRISTHASH_H
-#define CHESSHISTORYFINDER_ZOBRISTHASH_H
+#pragma once
 
 #include <array>
 #include <vector>
@@ -45,6 +42,3 @@ namespace Chess {
     };
 
 }
-
-
-#endif //CHESSHISTORYFINDER_ZOBRISTHASH_H

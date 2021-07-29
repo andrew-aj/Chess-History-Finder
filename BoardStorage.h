@@ -1,5 +1,4 @@
-#ifndef CHESSHISTORYFINDER_BOARDSTORAGE_H
-#define CHESSHISTORYFINDER_BOARDSTORAGE_H
+#pragma once
 
 #include "Defines.h"
 #include "ChessBinaryRep.h"
@@ -39,6 +38,3 @@ namespace Chess {
     };
 
 }
-
-
-#endif //CHESSHISTORYFINDER_BOARDSTORAGE_H

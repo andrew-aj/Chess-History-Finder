@@ -1,5 +1,4 @@
-#ifndef CHESSHISTORYFINDER_NODE_H
-#define CHESSHISTORYFINDER_NODE_H
+#pragma once
 
 #include <vector>
 
@@ -66,6 +65,3 @@ namespace Chess {
     };
 
 }
-
-
-#endif //CHESSHISTORYFINDER_NODE_H

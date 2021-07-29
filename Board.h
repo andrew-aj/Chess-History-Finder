@@ -1,9 +1,4 @@
-//
-// Created by hicke on 7/26/2021.
-//
-
-#ifndef CHESSHISTORYFINDER_BOARD_H
-#define CHESSHISTORYFINDER_BOARD_H
+#pragma once
 
 #include "Defines.h"
 #include "TextureManager.h"
@@ -33,6 +28,3 @@ namespace Chess{
         void UpdateBlackWhite();
     };
 }
-
-
-#endif //CHESSHISTORYFINDER_BOARD_H

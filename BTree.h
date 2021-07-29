@@ -1,5 +1,4 @@
-#ifndef CHESSHISTORYFINDER_BTREE_H
-#define CHESSHISTORYFINDER_BTREE_H
+#pragma once
 
 #include "Node.h"
 #include "Defines.h"
@@ -25,6 +24,3 @@ namespace Chess {
     };
 
 }
-
-
-#endif //CHESSHISTORYFINDER_BTREE_H

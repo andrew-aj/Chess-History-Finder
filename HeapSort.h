@@ -1,9 +1,4 @@
-//
-// Created by hicke on 7/25/2021.
-//
-
-#ifndef CHESSHISTORYFINDER_HEAPSORT_H
-#define CHESSHISTORYFINDER_HEAPSORT_H
+#pragma once
 
 #include <vector>
 
@@ -41,7 +36,3 @@ namespace Chess{
         }
     }
 }
-
-
-
-#endif //CHESSHISTORYFINDER_HEAPSORT_H

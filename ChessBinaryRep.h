@@ -1,5 +1,4 @@
-#ifndef CHESSHISTORYFINDER_CHESSBINARYREP_H
-#define CHESSHISTORYFINDER_CHESSBINARYREP_H
+#pragma once
 
 #include <cstdint>
 
@@ -22,5 +21,3 @@ namespace Chess {
     };
 
 }
-
-#endif //CHESSHISTORYFINDER_CHESSBINARYREP_H
