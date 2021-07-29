@@ -11,10 +11,21 @@ namespace Chess {
 
     class BoardStorage {
     public:
+        BoardStorage();
+
+        hash calculateZobristHash();
+
+        void applyMove(NextMove& move);
+
+        bool isBlackMove();
+
+        void setBlackToMove(bool in);
 
     private:
+        //0-7 is row 1. To move up a row, add 8 to the index.
+        std::array<Pieces, 64> board {Pieces::NoPiece};
 
-        std::array<Pieces, 64> board;
+        bool blackToMove;
     };
 
 }

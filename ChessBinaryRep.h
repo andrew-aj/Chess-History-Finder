@@ -17,7 +17,8 @@ namespace Chess {
         BKnight = 0b1010,
         BBishop = 0b1011,
         BQueen = 0b1100,
-        BKing = 0b1101
+        BKing = 0b1101,
+        NoPiece = 0b1111
     };
 
 }
