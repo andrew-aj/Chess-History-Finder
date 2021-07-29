@@ -25,7 +25,8 @@ namespace Chess {
     }
 
     hash BoardStorage::calculateZobristHash() {
-        return 0;
+        hash storage = 0;
+
     }
 
     void BoardStorage::applyMove(NextMove &move) {
@@ -55,6 +56,13 @@ namespace Chess {
                         break;
                 }
                 return;
+            } else if (board[firstPos] == Pieces::WPawn && board[secondPos] == Pieces::NoPiece &&
+                       (secondPos == firstPos + 7 || secondPos == firstPos + 9) && secondPos >= 40 && secondPos <= 47 &&
+                       board[secondPos - 8] == Pieces::BPawn) {
+                board[secondPos] = Pieces::WPawn;
+                board[firstPos] = Pieces::NoPiece;
+                board[secondPos - 8] = Pieces::NoPiece;
+                return;
             }
         } else {
             if (board[firstPos] == Pieces::BPawn && secondPos <= 7 && secondPos >= 0) {
@@ -76,6 +84,13 @@ namespace Chess {
                         board[secondPos] = Pieces::BBishop;
                         break;
                 }
+                return;
+            } else if (board[firstPos] == Pieces::BPawn && board[secondPos] == Pieces::NoPiece &&
+                       (secondPos == firstPos - 7 || secondPos == firstPos - 9) && secondPos >= 16 && secondPos <= 23 &&
+                       board[secondPos + 8] == Pieces::BPawn) {
+                board[secondPos] = Pieces::BPawn;
+                board[firstPos] = Pieces::NoPiece;
+                board[secondPos + 8] = Pieces::NoPiece;
                 return;
             }
         }
