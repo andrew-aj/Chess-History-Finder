@@ -13,7 +13,7 @@
 using std::swap;
 
 namespace Chess{
-    void Heapify(vector<hash>& hashVector, int size,int i){
+    void Heapify(std::vector<hash>& hashVector, int size,int i){
         int largest = i;
         int l = 2 * i + 1;
         int r = 2 * i + 2;
@@ -27,12 +27,12 @@ namespace Chess{
             Heapify(hashVector, size, largest);
         }
     }
-    void BuildHeap(vector<hash>& hashVector, int size){
+    void BuildHeap(std::vector<hash>& hashVector, int size){
         for(int i = size / 2 - 1; i >=0; i--)
             Heapify(hashVector, size, i);
 
     }
-    void HeapSort(vector<hash>& hashVector){
+    void HeapSort(std::vector<hash>& hashVector){
         int size = hashVector.size();
         BuildHeap(hashVector, size);
         for(int i = size - 1; i >= 0; i--){
