@@ -22,6 +22,11 @@ namespace Chess {
         for (int i = 48; i < 56; i++) {
             board[i] = Pieces::BPawn;
         }
+        bool wQueenCastle = true;
+        bool wKingCastle = true;
+
+        bool bQueenCastle = true;
+        bool bKingCastle = true;
     }
 
     hash BoardStorage::calculateZobristHash() {
@@ -63,6 +68,8 @@ namespace Chess {
                 board[firstPos] = Pieces::NoPiece;
                 board[secondPos - 8] = Pieces::NoPiece;
                 return;
+            }else if (wKingCastle && ){
+
             }
         } else {
             if (board[firstPos] == Pieces::BPawn && secondPos <= 7 && secondPos >= 0) {

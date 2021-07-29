@@ -26,6 +26,12 @@ namespace Chess {
         std::array<Pieces, 64> board {Pieces::NoPiece};
 
         bool blackToMove;
+
+        bool wQueenCastle;
+        bool wKingCastle;
+
+        bool bQueenCastle;
+        bool bKingCastle;
     };
 
 }

@@ -22,6 +22,7 @@ namespace Chess {
         std::vector<NextMove> bestBlack;
 
         //Random number storage
+        //
         static std::array<hash, 781> randNums;
 
         //Generates the random numbers to create zobrist hashes
