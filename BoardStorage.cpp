@@ -69,7 +69,7 @@ namespace Chess {
                 board[firstPos] = Pieces::NoPiece;
                 board[secondPos - 8] = Pieces::NoPiece;
                 return;
-            }else if (wKingCastle){
+            }else if (wQueenCastle){
 
             }
         } else {
