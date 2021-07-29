@@ -69,7 +69,7 @@ namespace Chess {
                 board[firstPos] = Pieces::NoPiece;
                 board[secondPos - 8] = Pieces::NoPiece;
                 return;
-            }else if (wKingCastle && ){
+            }else if (wKingCastle){
 
             }
         } else {
@@ -113,5 +113,9 @@ namespace Chess {
 
     void BoardStorage::setBlackToMove(bool in) {
         blackToMove = in;
+    }
+
+    hash BoardStorage::getHash() {
+        return storage;
     }
 }
