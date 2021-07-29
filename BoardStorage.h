@@ -23,7 +23,9 @@ namespace Chess {
 
     private:
         //0-7 is row 1. To move up a row, add 8 to the index.
-        std::array<Pieces, 64> board {Pieces::NoPiece};
+        std::array<Pieces, 64> board;
+
+        hash storage;
 
         bool blackToMove;
 

@@ -7,7 +7,6 @@
 #include <vector>
 #include <algorithm>
 #include <random>
-#include <execution>
 
 #include "Defines.h"
 #include "NextMove.h"

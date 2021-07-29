@@ -5,6 +5,7 @@ namespace Chess {
 
     BoardStorage::BoardStorage() {
         blackToMove = false;
+        board.fill(Pieces::NoPiece);
         board[0] = Pieces::WRook;
         board[1] = Pieces::WKnight;
         board[2] = Pieces::WBishop;
