@@ -5,6 +5,7 @@
 #include "ZobristHash.h"
 
 #include <array>
+using std::string;
 
 namespace Chess {
 
@@ -22,12 +23,23 @@ namespace Chess {
 
         hash getHash();
 
+        void setWhiteWinner();
+        void setBlackWinner();
+        void setDraw();
+        bool whiteWon();
+        bool blackWon();
+        bool isDraw();
+
     private:
         //0-7 is row 1. To move up a row, add 8 to the index.
         std::array<Pieces, 64> board;
 
         hash storage;
-        bool whiteWon;
+
+        // 00000001 - white won
+        // 00000010 - black won
+        // 00000100 - draw
+        uint8_t outcome;
 
         bool blackToMove;
 

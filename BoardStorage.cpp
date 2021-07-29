@@ -69,7 +69,7 @@ namespace Chess {
                 board[firstPos] = Pieces::NoPiece;
                 board[secondPos - 8] = Pieces::NoPiece;
                 return;
-            }else if (wQueenCastle){
+            } else if (wQueenCastle) {
 
             }
         } else {
@@ -118,4 +118,38 @@ namespace Chess {
     hash BoardStorage::getHash() {
         return storage;
     }
+
+    void BoardStorage::setWhiteWinner() {
+        outcome = 0b001;
+    }
+
+    void BoardStorage::setBlackWinner() {
+        outcome = 0b010;
+    }
+
+    void BoardStorage::setDraw() {
+        outcome = 0b100;
+    }
+
+    bool BoardStorage::whiteWon() {
+        if (outcome == 0b001)
+            return true;
+
+        return false;
+    }
+
+    bool BoardStorage::blackWon() {
+        if (outcome == 0b010)
+            return true;
+
+        return false;
+    }
+
+    bool BoardStorage::isDraw() {
+        if (outcome == 0b100)
+            return true;
+
+        return false;
+    }
+
 }
