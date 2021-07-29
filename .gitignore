@@ -1,3 +1,3 @@
-/cmake-build-debug/
-/.idea
-!/cmake-build-debug/images/*
+.idea
+cmake-build-debug/*
+!cmake-build-debug/images
