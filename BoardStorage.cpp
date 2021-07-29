@@ -4,7 +4,7 @@ namespace Chess {
 
 
     BoardStorage::BoardStorage() {
-        blackToMove = false;
+//        blackToMove = false;
         board.fill(Pieces::NoPiece);
         board[0] = Pieces::WRook;
         board[1] = Pieces::WKnight;
@@ -23,20 +23,20 @@ namespace Chess {
         for (int i = 48; i < 56; i++) {
             board[i] = Pieces::BPawn;
         }
-        bool wQueenCastle = true;
-        bool wKingCastle = true;
+        wQueenCastle = true;
+        wKingCastle = true;
 
-        bool bQueenCastle = true;
-        bool bKingCastle = true;
+        bQueenCastle = true;
+        bKingCastle = true;
     }
 
     hash BoardStorage::calculateZobristHash() {
-        hash storage = 0;
+        storage = 0;
 
     }
 
     void BoardStorage::applyMove(NextMove &move) {
-        blackToMove = !(move.move >> 14);
+        bool blackToMove = !(move.move >> 14);
         uint8_t firstPos = (move.move >> 8) & 0b111111;
         uint8_t secondPos = (move.move >> 2) & 0b111111;
         uint8_t promotion = move.move & 0b11;
@@ -107,15 +107,15 @@ namespace Chess {
         board[firstPos] = Pieces::NoPiece;
     }
 
-    bool BoardStorage::isBlackMove() {
-        return blackToMove;
-    }
+//    bool BoardStorage::isBlackMove() {
+//        return blackToMove;
+//    }
 
-    void BoardStorage::setBlackToMove(bool in) {
-        blackToMove = in;
-    }
+//    void BoardStorage::setBlackToMove(bool in) {
+//        blackToMove = in;
+//    }
 
-    hash BoardStorage::getHash() {
+    hash BoardStorage::getHash() const {
         return storage;
     }
 
@@ -131,25 +131,31 @@ namespace Chess {
         outcome = 0b100;
     }
 
-    bool BoardStorage::whiteWon() {
+    bool BoardStorage::whiteWon() const {
         if (outcome == 0b001)
             return true;
 
         return false;
     }
 
-    bool BoardStorage::blackWon() {
+    bool BoardStorage::blackWon() const {
         if (outcome == 0b010)
             return true;
 
         return false;
     }
 
-    bool BoardStorage::isDraw() {
+    bool BoardStorage::isDraw() const {
         if (outcome == 0b100)
             return true;
 
         return false;
+    }
+
+    NextMove BoardStorage::generateMove(const string &pgnMove, bool blackToMove) {
+        if (pgnMove[0] >= 'a' && pgnMove[0] <= 'h' && pgnMove[1] != 'x') {
+            // TODO this function is gonna be real fucking annoying
+        }
     }
 
 }

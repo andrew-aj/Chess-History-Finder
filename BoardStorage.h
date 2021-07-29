@@ -17,18 +17,20 @@ namespace Chess {
 
         void applyMove(NextMove& move);
 
-        bool isBlackMove();
+//        bool isBlackMove();
+//
+//        void setBlackToMove(bool in);
 
-        void setBlackToMove(bool in);
-
-        hash getHash();
+        hash getHash() const;
 
         void setWhiteWinner();
         void setBlackWinner();
         void setDraw();
-        bool whiteWon();
-        bool blackWon();
-        bool isDraw();
+        bool whiteWon() const;
+        bool blackWon() const;
+        bool isDraw() const;
+
+        NextMove generateMove(const string& pgnMove, bool blackToMove);
 
     private:
         //0-7 is row 1. To move up a row, add 8 to the index.
@@ -41,7 +43,7 @@ namespace Chess {
         // 00000100 - draw
         uint8_t outcome;
 
-        bool blackToMove;
+//        bool blackToMove;
 
         bool wQueenCastle;
         bool wKingCastle;
