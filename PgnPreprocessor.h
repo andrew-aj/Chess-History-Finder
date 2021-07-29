@@ -15,13 +15,10 @@ using std::multiset;
 namespace Chess {
     class PgnPreprocessor {
     private:
-        struct BoardState {
-            hash data;
-            NextMove next;
-        };
-
         unordered_map<hash, multiset<NextMove>> hashStorage; // Multiset keeps track of how many times a NextMove occurs.
     public:
         void readFile(const string& fileName);
+        void simulateGame(const string& moveText, const string& results);
+        void writeFile(const string& fileName);
     };
 }
