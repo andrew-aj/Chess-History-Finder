@@ -1,8 +1,6 @@
 #include "BoardStorage.h"
 
 namespace Chess {
-
-
     BoardStorage::BoardStorage() {
 //        blackToMove = false;
         board.fill(Pieces::NoPiece);
@@ -36,7 +34,7 @@ namespace Chess {
     }
 
     void BoardStorage::applyMove(NextMove &move) {
-        bool blackToMove = !(move.move >> 14);
+        bool blackToMove = !((move.move >> 14) & 0b01);
         uint8_t firstPos = (move.move >> 8) & 0b111111;
         uint8_t secondPos = (move.move >> 2) & 0b111111;
         uint8_t promotion = move.move & 0b11;
@@ -153,8 +151,67 @@ namespace Chess {
     }
 
     NextMove BoardStorage::generateMove(const string &pgnMove, bool blackToMove) {
-        if (pgnMove[0] >= 'a' && pgnMove[0] <= 'h' && pgnMove[1] != 'x') {
-            // TODO this function is gonna be real fucking annoying
+        NextMove move;
+        //Pawn move
+        if (pgnMove[0] >= 'a' && pgnMove[0] <= 'h') {
+            //Set the move to initialized
+            move.move = 0x8000;
+            //Set move to whether it is a white or black move.
+            move.move += 0x4000 * blackToMove;
+            auto capture = pgnMove.find('x');
+            auto promote = pgnMove.find('=');
+            int end = pgnMove.length();
+            int beg = 0;
+            //This move involves capturing
+            if (capture != string::npos) {
+                beg = 2;
+                if (blackToMove){
+
+                } else{
+
+                }
+            } else {
+
+            }
+            //This move involves promoting
+            if (promote != string::npos) {
+                char last = pgnMove[pgnMove.size() - 1];
+                uint8_t var = 0;
+                switch (last) {
+                    case 'Q':
+                        var = 0;
+                        break;
+                    case 'R':
+                        var = 1;
+                        break;
+                    case 'K':
+                        var = 2;
+                        break;
+                    case 'B':
+                        var = 3;
+                        break;
+                    default:
+                        var = 0;
+                        break;
+                }
+                //Add the promotion to the move.
+                move.move += var;
+                end = promote-beg;
+            }
+            //Add the final position to the move;
+            move.move += (boardToBin(pgnMove.substr(beg, end)) << 2);
+
+        }
+
+        return move;
+    }
+
+    uint8_t BoardStorage::boardToBin(const string &pos) {
+        try {
+            return (pos[0] - 'a') + (std::stoi(pos.substr(1)) - 1) * 8;
+        } catch (std::exception& e) {
+            std::cout << "boardToBin failed with input " << pos << std::endl;
+            throw e;
         }
     }
 

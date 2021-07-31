@@ -5,6 +5,8 @@
 #include "ZobristHash.h"
 
 #include <array>
+#include <string>
+#include <iostream>
 using std::string;
 
 namespace Chess {
@@ -33,6 +35,8 @@ namespace Chess {
         NextMove generateMove(const string& pgnMove, bool blackToMove);
 
     private:
+        uint8_t boardToBin(const string& pos);
+
         //0-7 is row 1. To move up a row, add 8 to the index.
         std::array<Pieces, 64> board;
 
