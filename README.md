@@ -13,3 +13,9 @@ The project will use namespace Chess for all of created classes and data types
 to separate them from the standard library.
 
 Use camel case for naming variables. Use pascal case for naming classes.
+
+For formatting the pgn files into a usable format, we use pgn-extract which is licensed
+under the GNU General Public License https://www.cs.kent.ac.uk/people/staff/djb/pgn-extract/.
+
+For using pgn-extract use the following command:
+pgn-extract -oout.pgn -Whalg -w99999 --nochecks --nocomments test.pgn
