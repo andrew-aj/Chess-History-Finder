@@ -154,8 +154,31 @@ namespace Chess {
         NextMove move;
         move += 0x8000 * (!(blackWon() ^ blackToMove));
         move += 0x4000 * blackToMove;
-        move += boardToBin(pgnMove.substr(0,2)) << 8;
-        move += boardToBin(pgnMove.substr(2, 2)) << 2;
+        if (pgnMove.find('-') != string::npos) {
+            move += boardToBin(pgnMove.substr(0, 2)) << 8;
+            move += boardToBin(pgnMove.substr(3, 2)) << 2;
+        }else{
+            move += boardToBin(pgnMove.substr(0, 2)) << 8;
+            move += boardToBin(pgnMove.substr(2, 2)) << 2;
+            char promotion = pgnMove[4];
+            switch (promotion) {
+                case 'Q':
+                    move += 0;
+                    break;
+                case 'R':
+                    move += 1;
+                    break;
+                case 'K':
+                    move += 2;
+                    break;
+                case 'B':
+                    move += 3;
+                    break;
+                default:
+                    move += 0;
+                    break;
+            }
+        }
 
         return move;
     }
