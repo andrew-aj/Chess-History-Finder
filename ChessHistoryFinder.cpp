@@ -5,6 +5,7 @@ namespace Chess {
     void ChessHistoryFinder::startProgramWindow() {
         window.create(sf::VideoMode(1280, 720), "Chess History Finder!");
         sf::Sprite bg(TextureManager::GetTexture("bg"));
+        window.setFramerateLimit(60);
 
         while (window.isOpen()) {
             sf::Event event;
