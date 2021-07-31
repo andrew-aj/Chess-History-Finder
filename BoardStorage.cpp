@@ -152,56 +152,6 @@ namespace Chess {
 
     NextMove BoardStorage::generateMove(const string &pgnMove, bool blackToMove) {
         NextMove move;
-        //Pawn move
-        if (pgnMove[0] >= 'a' && pgnMove[0] <= 'h') {
-            //Set the move to initialized
-            move.move = 0x8000;
-            //Set move to whether it is a white or black move.
-            move.move += 0x4000 * blackToMove;
-            auto capture = pgnMove.find('x');
-            auto promote = pgnMove.find('=');
-            int end = pgnMove.length();
-            int beg = 0;
-            //This move involves capturing
-            if (capture != string::npos) {
-                beg = 2;
-                if (blackToMove){
-
-                } else{
-
-                }
-            } else {
-
-            }
-            //This move involves promoting
-            if (promote != string::npos) {
-                char last = pgnMove[pgnMove.size() - 1];
-                uint8_t var = 0;
-                switch (last) {
-                    case 'Q':
-                        var = 0;
-                        break;
-                    case 'R':
-                        var = 1;
-                        break;
-                    case 'K':
-                        var = 2;
-                        break;
-                    case 'B':
-                        var = 3;
-                        break;
-                    default:
-                        var = 0;
-                        break;
-                }
-                //Add the promotion to the move.
-                move.move += var;
-                end = promote-beg;
-            }
-            //Add the final position to the move;
-            move.move += (boardToBin(pgnMove.substr(beg, end)) << 2);
-
-        }
 
         return move;
     }
