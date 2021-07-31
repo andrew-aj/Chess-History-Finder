@@ -168,7 +168,7 @@ namespace Chess {
                 case 'R':
                     move += 1;
                     break;
-                case 'K':
+                case 'N':
                     move += 2;
                     break;
                 case 'B':
