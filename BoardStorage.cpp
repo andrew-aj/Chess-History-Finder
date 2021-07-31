@@ -34,10 +34,10 @@ namespace Chess {
     }
 
     void BoardStorage::applyMove(NextMove &move) {
-        bool blackToMove = !((move.move >> 14) & 0b01);
-        uint8_t firstPos = (move.move >> 8) & 0b111111;
-        uint8_t secondPos = (move.move >> 2) & 0b111111;
-        uint8_t promotion = move.move & 0b11;
+        bool blackToMove = !((move >> 14) & 0b01);
+        uint8_t firstPos = (move >> 8) & 0b111111;
+        uint8_t secondPos = (move >> 2) & 0b111111;
+        uint8_t promotion = move & 0b11;
 
         if (!blackToMove) {
             if (board[firstPos] == Pieces::WPawn && secondPos <= 63 && secondPos >= 56) {
@@ -152,10 +152,10 @@ namespace Chess {
 
     NextMove BoardStorage::generateMove(const string &pgnMove, bool blackToMove) {
         NextMove move;
-        move.move += 0x8000 * (!(blackWon() ^ blackToMove));
-        move.move += 0x4000 * blackToMove;
-        move.move += boardToBin(pgnMove.substr(0,2)) << 8;
-        move.move += boardToBin(pgnMove.substr(2, 2)) << 2;
+        move += 0x8000 * (!(blackWon() ^ blackToMove));
+        move += 0x4000 * blackToMove;
+        move += boardToBin(pgnMove.substr(0,2)) << 8;
+        move += boardToBin(pgnMove.substr(2, 2)) << 2;
 
         return move;
     }
