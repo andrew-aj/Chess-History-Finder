@@ -152,6 +152,10 @@ namespace Chess {
 
     NextMove BoardStorage::generateMove(const string &pgnMove, bool blackToMove) {
         NextMove move;
+        move.move += 0x8000 * (!(blackWon() ^ blackToMove));
+        move.move += 0x4000 * blackToMove;
+        move.move += boardToBin(pgnMove.substr(0,2)) << 8;
+        move.move += boardToBin(pgnMove.substr(2, 2)) << 2;
 
         return move;
     }
