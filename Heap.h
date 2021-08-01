@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ZobristHash.h"
+#include <vector>
+using std::vector;
 
 namespace Chess {
     class Heap {
@@ -30,6 +32,10 @@ namespace Chess {
         HeapNode* getRightMostLeaf();
         HeapNode* getInsertParent();
         void swapNodeValues(HeapNode* first, HeapNode* second);
+        bool isEmpty();
+        ZobristHash top();
+
+        static void HeapSort(vector<ZobristHash>& toSort);
 
         Heap() : root(nullptr), size(0) {};
     };

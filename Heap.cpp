@@ -28,7 +28,7 @@ namespace Chess {
 
         while (node->left != nullptr && node->right != nullptr) {
             if (node->value > node->left->value && node->value > node->right->value) { // greater than both children
-                if (node->left < node->right) {
+                if (node->left->value < node->right->value) {
                     swapNodeValues(node->left, node);
                     node = node->left;
                 } else {
@@ -148,5 +148,31 @@ namespace Chess {
         ZobristHash temp = first->value;
         first->value = second->value;
         second->value = temp;
+    }
+
+    ZobristHash Heap::top() {
+        return root->value;
+    }
+
+    bool Heap::isEmpty() {
+        if (size == 0)
+            return true;
+
+        return false;
+    }
+
+    void Heap::HeapSort(vector<ZobristHash>& toSort) {
+        Heap heap;
+
+        for (auto iter : toSort) {
+            heap.insert(iter);
+        }
+
+        toSort.clear();
+
+        while (!heap.isEmpty()) {
+            toSort.push_back(heap.top());
+            heap.removeTop();
+        }
     }
 }
