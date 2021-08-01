@@ -366,16 +366,11 @@ namespace Chess {
     }
 
     uint8_t BoardStorage::boardToBin(const string &pos) {
-        if (!pos.empty()) {
-            try {
-                return (pos[0] - 'a') + (std::stoi(pos.substr(1)) - 1) * 8;
-            } catch (std::exception &e) {
-                std::cout << "boardToBin failed with input " << pos << std::endl;
-                throw e;
-            }
-        } else {
-
-
+        try {
+            return (pos[0] - 'a') + (std::stoi(pos.substr(1)) - 1) * 8;
+        } catch (std::exception &e) {
+            std::cout << "boardToBin failed with input " << pos << std::endl;
+            throw e;
         }
     }
 
