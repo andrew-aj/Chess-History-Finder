@@ -3,30 +3,7 @@
 namespace Chess {
     BoardStorage::BoardStorage() {
 //        blackToMove = false;
-        storage = 0;
-        board.fill(Pieces::NoPiece);
-        board[0] = Pieces::WRook;
-        board[1] = Pieces::WKnight;
-        board[2] = Pieces::WBishop;
-        board[3] = Pieces::WQueen;
-        board[4] = Pieces::WKing;
-        board[5] = Pieces::WBishop;
-        board[6] = Pieces::WKing;
-        board[7] = Pieces::WRook;
-        for (int i = 56; i < 64; i++) {
-            board[i] = static_cast<Pieces>(board[i - 56] + 0b1000);
-        }
-        for (int i = 8; i < 16; i++) {
-            board[i] = Pieces::WPawn;
-        }
-        for (int i = 48; i < 56; i++) {
-            board[i] = Pieces::BPawn;
-        }
-        wQueenCastle = true;
-        wKingCastle = true;
-
-        bQueenCastle = true;
-        bKingCastle = true;
+        setDefault();
 
         calculateZobristHash();
     }
@@ -384,6 +361,68 @@ namespace Chess {
         short square = i * 12;
         short index = (piece >= Pieces::BPawn) ? piece - 2 : piece;
         return square + index;
+    }
+
+    void BoardStorage::addPiece(Pieces pieces, int pos) {
+        board[pos] = pieces;
+    }
+
+    void BoardStorage::clear() {
+        storage = 0;
+        wQueenCastle = true;
+        wKingCastle = true;
+        bQueenCastle = true;
+        bKingCastle = true;
+        board.fill(Pieces::NoPiece);
+    }
+
+    void BoardStorage::calculateZobristHash(bool wKC, bool wQC, bool bKC, bool bQC, bool blackToMove) {
+        for (int i = 0; i < board.size(); i++) {
+            if (board[i] == Pieces::NoPiece)
+                continue;
+            storage ^= ZobristHash::randNums[calculateZobristIndex(i)];
+        }
+
+        if (blackToMove) {
+            storage ^= ZobristHash::randNums[768];
+        }
+
+        if (wQC)
+            storage ^= ZobristHash::randNums[769];
+        if (wKC)
+            storage ^= ZobristHash::randNums[770];
+        if (bQC)
+            storage ^= ZobristHash::randNums[771];
+        if (bKC)
+            storage ^= ZobristHash::randNums[772];
+
+    }
+
+    void BoardStorage::setDefault() {
+        storage = 0;
+        board.fill(Pieces::NoPiece);
+        board[0] = Pieces::WRook;
+        board[1] = Pieces::WKnight;
+        board[2] = Pieces::WBishop;
+        board[3] = Pieces::WQueen;
+        board[4] = Pieces::WKing;
+        board[5] = Pieces::WBishop;
+        board[6] = Pieces::WKing;
+        board[7] = Pieces::WRook;
+        for (int i = 56; i < 64; i++) {
+            board[i] = static_cast<Pieces>(board[i - 56] + 0b1000);
+        }
+        for (int i = 8; i < 16; i++) {
+            board[i] = Pieces::WPawn;
+        }
+        for (int i = 48; i < 56; i++) {
+            board[i] = Pieces::BPawn;
+        }
+        wQueenCastle = true;
+        wKingCastle = true;
+
+        bQueenCastle = true;
+        bKingCastle = true;
     }
 
 }

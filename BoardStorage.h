@@ -17,7 +17,11 @@ namespace Chess {
 
         void calculateZobristHash();
 
+        void calculateZobristHash(bool wKC, bool wQC, bool bKC, bool bQC, bool blackToMove);
+
         void applyMove(NextMove& move);
+
+        void setDefault();
 
 //        bool isBlackMove();
 //
@@ -33,6 +37,10 @@ namespace Chess {
         bool isDraw() const;
 
         NextMove generateMove(const string& pgnMove, bool blackToMove);
+
+        void addPiece(Pieces pieces, int pos);
+
+        void clear();
 
     private:
         uint8_t boardToBin(const string& pos);
