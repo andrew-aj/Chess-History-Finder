@@ -96,5 +96,8 @@ namespace Chess {
         }
     }
 
+    BTree::~BTree() {
+        delete root;
+    }
 
 }
