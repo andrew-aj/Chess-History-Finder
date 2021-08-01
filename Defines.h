@@ -6,7 +6,7 @@ namespace Chess {
 
     using hash = uint64_t; // An int with a fixed width of 64 bits.
 
-    //Store in short using 16 bits.
+    //Stored in fixed width int using 16 bits.
     //Format: 0000000000000000
     //First bit stores who won depending on the next bit. (a win could also indicate a draw)
     //Next bit represents whether move is white (0) or black (1)
