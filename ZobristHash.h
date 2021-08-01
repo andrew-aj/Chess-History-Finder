@@ -18,7 +18,11 @@ namespace Chess {
         std::vector<NextMove> bestBlack;
 
         //Random number storage
-        //
+        //0-11 are the pieces on a1 and so on in the same order as the Pieces enum.
+        //index 768 is move hash.
+        //index 769-772 is castling rights
+        //For castling, 769 is WQ castle, 770 is WK castle, 771 is BQ castle, 772 is BK castle
+        //773-780 are the en passant files.
         static std::array<hash, 781> randNums;
 
         //Generates the random numbers to create zobrist hashes

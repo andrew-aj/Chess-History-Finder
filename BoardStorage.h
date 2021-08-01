@@ -15,7 +15,7 @@ namespace Chess {
     public:
         BoardStorage();
 
-        hash calculateZobristHash();
+        constexpr void calculateZobristHash();
 
         void applyMove(NextMove& move);
 
@@ -36,6 +36,10 @@ namespace Chess {
 
     private:
         uint8_t boardToBin(const string& pos);
+
+        short calculateZobristIndex(short i);
+
+        short calculateZobristIndex(short i, Pieces piece);
 
         //0-7 is row 1. To move up a row, add 8 to the index.
         std::array<Pieces, 64> board;
