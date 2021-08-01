@@ -1,8 +1,8 @@
-#include "ChessHistoryFinder.h"
+#include "GUI.h"
 #include "TextureManager.h"
 
 namespace Chess {
-    void ChessHistoryFinder::startProgramWindow() {
+    void GUI::startProgramWindow() {
         window.create(sf::VideoMode(1280, 720), "Chess History Finder!");
         sf::Sprite bg(TextureManager::GetTexture("bg"));
         window.setFramerateLimit(60);

@@ -8,14 +8,14 @@
 using std::map;
 
 namespace Chess {
-    class ChessHistoryFinder {
+    class GUI {
     private:
         sf::RenderWindow window;
         map<string, sf::Sprite> sprites;
     public:
         void startProgramWindow();
 
-        ChessHistoryFinder() {
+        GUI() {
 
         }
     };
