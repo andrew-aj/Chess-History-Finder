@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 using std::ifstream;
+using std::ofstream;
 using std::cout;
 using std::endl;
 using std::getline;
@@ -18,11 +19,8 @@ namespace Chess {
 
         ifstream file(fileName);
 
-        while (true) {
+        while (!file.eof()) {
             getline(file, currLine);
-
-            if (file.eof())
-                break;
 
             if (currLine.substr(1, 6) == "Result") {
                 result = currLine;
@@ -37,13 +35,14 @@ namespace Chess {
                 }
 
                 simulateGame(moveText, result);
+                cout << "simulate complete." << endl;
             }
         }
     }
 
     void PgnPreprocessor::simulateGame(const string &moveText, const string& result) {
-        if (moveText.find("eval"))
-            return;
+//        if (moveText.find("eval"))
+//            return;
 
         BoardStorage game;
 
@@ -67,13 +66,15 @@ namespace Chess {
         ss << moveText;
 
 
-        while(true) {
+        while(!ss.eof()) {
             string whiteMove;
             string blackMove;
             NextMove white {};
             NextMove black {};
 
             getline(ss, moves, '.'); // skips the first '.' in the moveText
+            if (ss.eof())
+                break;
 
             ss >> whiteMove;
             if (whiteMove[0] >= '0' && whiteMove[0] <= '9') {
@@ -101,6 +102,16 @@ namespace Chess {
     }
 
     void PgnPreprocessor::writeFile(const string &fileName) {
-        // TODO
+        ofstream file(fileName);
+
+        for (auto iter = hashStorage.begin(); iter != hashStorage.end(); iter++) {
+            file << iter->first << ": ";
+            for (auto jter = iter->second.begin(); jter != iter->second.end(); jter++) {
+                file << *jter << ", ";
+            }
+            file << endl;
+        }
+
+        file.close();
     }
 }
