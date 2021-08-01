@@ -36,10 +36,9 @@ namespace Chess {
         }
     }
 
-    ZobristHash::ZobristHash(hash data, std::vector<NextMove> &bestWhite, std::vector<NextMove> &bestBlack) {
+    ZobristHash::ZobristHash(hash data, NextMove bestMove) {
         this->Data = data;
-        this->bestWhite = bestWhite;
-        this->bestBlack = bestBlack;
+        this->bestMove = bestMove;
     }
 
     bool ZobristHash::initialized() {

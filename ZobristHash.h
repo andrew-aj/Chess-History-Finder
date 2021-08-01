@@ -14,8 +14,9 @@ namespace Chess {
         hash Data;
 
         //Storing the next best moves in NextMove struct.
-        std::vector<NextMove> bestWhite;
-        std::vector<NextMove> bestBlack;
+        /*std::vector<NextMove> bestWhite;
+        std::vector<NextMove> bestBlack;*/
+        NextMove bestMove;
 
         //Random number storage
         //0-11 are the pieces on a1 and so on in the same order as the Pieces enum.
@@ -32,7 +33,7 @@ namespace Chess {
 
         ZobristHash();
 
-        ZobristHash(hash data, std::vector<NextMove>& bestWhite, std::vector<NextMove>& bestBlack);
+        ZobristHash(hash data, NextMove bestMove);
 
         bool operator==(const ZobristHash &rhs) const;
 
