@@ -22,7 +22,7 @@ namespace Chess {
         while (!file.eof()) {
             getline(file, currLine);
 
-            if (currLine.substr(1, 6) == "Result") {
+            if (currLine.length() >= 7 && currLine.substr(1, 6) == "Result") {
                 result = currLine;
 
                 while (!file.eof()) {
