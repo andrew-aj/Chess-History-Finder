@@ -44,7 +44,7 @@ namespace Chess {
     }
 
     void BoardStorage::applyMove(NextMove &move) {
-        bool blackToMove = !((move >> 14) & 0b01);
+        bool blackToMove = ((move >> 14) & 0b01);
         uint8_t firstPos = (move >> 8) & 0b111111;
         uint8_t secondPos = (move >> 2) & 0b111111;
         uint8_t promotion = move & 0b11;
