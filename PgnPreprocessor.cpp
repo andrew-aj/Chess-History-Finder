@@ -4,12 +4,15 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <queue>
 using std::ifstream;
 using std::ofstream;
 using std::cout;
 using std::endl;
 using std::getline;
 using std::stringstream;
+using std::pair;
+using std::priority_queue;
 
 namespace Chess {
     void PgnPreprocessor::readFile(const string &fileName) {
@@ -35,7 +38,7 @@ namespace Chess {
                 }
 
                 simulateGame(moveText, result);
-                //cout << "simulate complete." << endl;
+                cout << "simulate complete." << endl;
             }
         }
     }
@@ -69,11 +72,9 @@ namespace Chess {
         while(!ss.eof()) {
             string whiteMove;
             string blackMove;
-            NextMove white {};
-            NextMove black {};
 
             getline(ss, moves, '.'); // skips the first '.' in the moveText
-            if (ss.eof())
+            if (ss.eof()) // If white wins the game, this makes sure the results aren't considered as a black move.
                 break;
 
             ss >> whiteMove;
@@ -81,10 +82,15 @@ namespace Chess {
                 // the game has finished
                 break;
             } else {
-                white = game.generateMove(whiteMove, false);
-                hashStorage[game.getHash()].insert(white);
+                unordered_map<NextMove, unsigned int>& currMoveStore = hashStorage[game.getHash()];
 
-                game.applyMove(white);
+                NextMove nextWhiteMove = game.generateMove(whiteMove, false);
+                if (currMoveStore.find(nextWhiteMove) == currMoveStore.end())
+                    currMoveStore[nextWhiteMove] = 1;
+                else
+                    currMoveStore[nextWhiteMove]++;
+
+                game.applyMove(nextWhiteMove);
             }
 
             ss >> blackMove;
@@ -92,10 +98,15 @@ namespace Chess {
                 // the game has finished
                 break;
             } else {
-                black = game.generateMove(blackMove, true);
-                hashStorage[game.getHash()].insert(black);
+                unordered_map<NextMove, unsigned int>& currMoveStore = hashStorage[game.getHash()];
 
-                game.applyMove(black);
+                NextMove nextBlackMove = game.generateMove(blackMove, true);
+                if (currMoveStore.find(nextBlackMove) == currMoveStore.end())
+                    currMoveStore[nextBlackMove] = 1;
+                else
+                    currMoveStore[nextBlackMove]++;
+
+                game.applyMove(nextBlackMove);
             }
 
         }
@@ -104,7 +115,7 @@ namespace Chess {
     void PgnPreprocessor::writeFile(const string &fileName) {
         ofstream file(fileName);
 
-        for (auto iter = hashStorage.begin(); iter != hashStorage.end(); iter++) {
+        for (auto iter = calculatedStorage.begin(); iter != calculatedStorage.end(); iter++) {
             file << iter->first << ": ";
             for (auto jter = iter->second.begin(); jter != iter->second.end(); jter++) {
                 file << *jter << ", ";
@@ -113,5 +124,23 @@ namespace Chess {
         }
 
         file.close();
+    }
+
+    void PgnPreprocessor::calculateNextBestMoves() {
+        for (auto hashIter : hashStorage) {
+            priority_queue<pair<unsigned int, NextMove>> pq;
+
+            for (auto moveIter : hashIter.second) {
+                pq.push({moveIter.second, moveIter.first});
+            }
+
+            for (unsigned int i = 0; i < 3; i++) {
+                if (pq.empty())
+                    break;
+
+                calculatedStorage[hashIter.first].insert(pq.top().second);
+                pq.pop();
+            }
+        }
     }
 }

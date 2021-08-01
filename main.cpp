@@ -2,13 +2,17 @@
 #include "ChessHistoryFinder.h"
 #include "PgnPreprocessor.h"
 #include "ZobristHash.h"
-#include "BoardStorage.h"
 
 int main() {
-//    Chess::ChessHistoryFinder program;
-//    program.startProgramWindow();
-    Chess::PgnPreprocessor program;
+
+    /* Code to start gui */
+//    Chess::ChessHistoryFinder gui;
+//    gui.startProgramWindow();
+
+    /* Code to start preprocessor */
     Chess::ZobristHash::generateRandomNumbers();
-    program.readFile("out.pgn");
-    program.writeFile("out.effective");
+    Chess::PgnPreprocessor preprocessor;
+    preprocessor.readFile("test.pgn");
+    preprocessor.calculateNextBestMoves();
+    preprocessor.writeFile("out.effective");
 }
