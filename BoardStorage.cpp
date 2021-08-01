@@ -30,7 +30,7 @@ namespace Chess {
         calculateZobristHash();
     }
 
-    constexpr void BoardStorage::calculateZobristHash() {
+    void BoardStorage::calculateZobristHash() {
         storage = 0;
         for (int i = 0; i < board.size(); i++) {
             if (board[i] == Pieces::NoPiece)

@@ -15,7 +15,7 @@ namespace Chess {
     public:
         BoardStorage();
 
-        constexpr void calculateZobristHash();
+        void calculateZobristHash();
 
         void applyMove(NextMove& move);
 
