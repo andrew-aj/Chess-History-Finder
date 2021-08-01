@@ -175,4 +175,9 @@ namespace Chess {
             heap.removeTop();
         }
     }
+
+    Heap::~Heap() {
+        while (!this->isEmpty())
+            this->removeTop();
+    }
 }

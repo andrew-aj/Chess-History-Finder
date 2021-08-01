@@ -38,5 +38,6 @@ namespace Chess {
         static void HeapSort(vector<ZobristHash>& toSort);
 
         Heap() : root(nullptr), size(0) {};
+        ~Heap();
     };
 }
