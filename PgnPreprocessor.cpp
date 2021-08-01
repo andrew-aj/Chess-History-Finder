@@ -42,9 +42,15 @@ namespace Chess {
                 }
 
                 simulateGame(moveText, result);
-                cout << "simulate complete." << endl;
+//                cout << "simulate complete." << endl;
+            }
+
+            if (hashStorage.size() > 50000000) { // around 7 gb of ram to read in 50,000,000 hashes
+                return;
             }
         }
+
+        cout << "Done reading file!" << endl;
     }
 
     void PgnPreprocessor::simulateGame(const string &moveText, const string& result) {
@@ -64,7 +70,7 @@ namespace Chess {
                 game.setDraw();
                 break;
             default:
-                cout << "somethings wrong..." << endl;
+                return;
         }
 
 
@@ -122,7 +128,6 @@ namespace Chess {
             vector<pair<unsigned int, NextMove>> blackNextMoves;
 
             for (auto moveIter : hashIter.second) {
-                // TODO confirm with cheezy that this isBlackMove check works
                 bool isBlackMove = ((moveIter.first >> 14) & 0b1);
                 bool isWinningMove = ((moveIter.first >> 15) & 0b1);
 
