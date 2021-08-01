@@ -15,4 +15,5 @@ int main() {
     preprocessor.readFile("test.pgn");
     preprocessor.calculateNextBestMoves();
     preprocessor.writeFile("out.effective");
+    preprocessor.writeFileBinary("outbin.effective");
 }

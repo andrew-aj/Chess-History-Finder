@@ -1,10 +1,12 @@
 #include "PgnPreprocessor.h"
 #include "BoardStorage.h"
 #include "NextMove.h"
+#include "ZobristHash.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <queue>
+#include <algorithm>
 using std::ifstream;
 using std::ofstream;
 using std::cout;
@@ -13,6 +15,8 @@ using std::getline;
 using std::stringstream;
 using std::pair;
 using std::priority_queue;
+using std::max_element;
+using std::ios;
 
 namespace Chess {
     void PgnPreprocessor::readFile(const string &fileName) {
@@ -112,35 +116,52 @@ namespace Chess {
         }
     }
 
+    void PgnPreprocessor::calculateNextBestMoves() {
+        for (auto hashIter : hashStorage) {
+            vector<pair<unsigned int, NextMove>> whiteNextMoves;
+            vector<pair<unsigned int, NextMove>> blackNextMoves;
+
+            for (auto moveIter : hashIter.second) {
+                // TODO confirm with cheezy that this isBlackMove check works
+                bool isBlackMove = ((moveIter.first >> 14) & 0b1);
+                bool isWinningMove = ((moveIter.first >> 15) & 0b1);
+
+                if (!isBlackMove && isWinningMove)
+                    whiteNextMoves.emplace_back(moveIter.second, moveIter.first);
+                if (isBlackMove && isWinningMove)
+                    blackNextMoves.emplace_back(moveIter.second, moveIter.first);
+            }
+
+            if (!whiteNextMoves.empty()) {
+                NextMove bestWhiteMove = max_element(whiteNextMoves.begin(), whiteNextMoves.end())->second;
+                calculatedStorage[hashIter.first] = bestWhiteMove;
+            }
+            if (!blackNextMoves.empty()) {
+                NextMove bestBlackMove = max_element(blackNextMoves.begin(), blackNextMoves.end())->second;
+                calculatedStorage[hashIter.first] = bestBlackMove;
+            }
+        }
+    }
+
     void PgnPreprocessor::writeFile(const string &fileName) {
         ofstream file(fileName);
 
         for (auto iter = calculatedStorage.begin(); iter != calculatedStorage.end(); iter++) {
-            file << iter->first << ": ";
-            for (auto jter = iter->second.begin(); jter != iter->second.end(); jter++) {
-                file << *jter << ", ";
-            }
-            file << endl;
-        }
-
-        file.close();
-    }
-
-    void PgnPreprocessor::calculateNextBestMoves() {
-        for (auto hashIter : hashStorage) {
-            priority_queue<pair<unsigned int, NextMove>> pq;
-
-            for (auto moveIter : hashIter.second) {
-                pq.push({moveIter.second, moveIter.first});
-            }
-
-            for (unsigned int i = 0; i < 3; i++) {
-                if (pq.empty())
-                    break;
-
-                calculatedStorage[hashIter.first].insert(pq.top().second);
-                pq.pop();
-            }
+            file << iter->first << ": " << iter->second << endl;
         }
     }
+
+    void PgnPreprocessor::writeFileBinary(const string &fileName) {
+        ofstream file(fileName, ios::binary);
+        uint64_t totalSuccessfulHashes = calculatedStorage.size();
+
+        file.write((char*)ZobristHash::randNums.data(), 781 * 8);
+        file.write((char*)&totalSuccessfulHashes, 8);
+
+        for (auto iter : calculatedStorage) {
+            file.write((char*)&iter.first, 8);
+            file.write((char*)&iter.second, 2);
+        }
+    }
+
 }
