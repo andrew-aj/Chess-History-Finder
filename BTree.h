@@ -13,7 +13,7 @@ namespace Chess {
 
         void insertHash(ZobristHash *pointer);
 
-        void insertHash(hash Data, std::vector<NextMove> &bestWhite, std::vector<NextMove> &bestBlack);
+        void insertHash(hash Data, NextMove bestMove);
 
         ZobristHash *findHash(hash Data);
 

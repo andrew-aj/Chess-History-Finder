@@ -16,13 +16,18 @@ namespace Chess {
 
             Node *temp = root;
 
-            while (!temp->leaf) {
+            while (!temp->children.empty()) {
                 int loc = temp->binarySearch(pointer->Data);
                 temp = temp->children[loc];
                 path.push(temp);
             }
 
             int loc = temp->binarySearch(pointer->Data);
+
+            if (temp->keys.size() > loc && temp->keys[loc]->Data == pointer->Data) {
+                return;
+            }
+
             temp->keys.insert(temp->keys.begin() + loc, pointer);
 
             while (!path.empty()) {
@@ -56,15 +61,19 @@ namespace Chess {
                     }
                     top->keys.erase(top->keys.begin() + mid, top->keys.end());
                     top->keys.reserve(order);
-                    top->children.erase(top->children.begin() + mid + 1, top->children.end());
+                    if (!top->children.empty()) {
+                        top->children.erase(top->children.begin() + mid + 1, top->children.end());
+                    } else {
+                        top->children.clear();
+                    }
                     top->children.reserve(order + 1);
                 }
             }
         }
     }
 
-    void BTree::insertHash(hash Data, std::vector<NextMove> &bestWhite, std::vector<NextMove> &bestBlack) {
-        ZobristHash *hash = new ZobristHash(Data, bestWhite, bestBlack);
+    void BTree::insertHash(hash Data, NextMove bestMove) {
+        ZobristHash *hash = new ZobristHash(Data, bestMove);
         insertHash(hash);
     }
 

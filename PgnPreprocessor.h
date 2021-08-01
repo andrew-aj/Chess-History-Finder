@@ -2,6 +2,7 @@
 
 #include "Defines.h"
 #include "NextMove.h"
+#include "BTree.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -24,5 +25,6 @@ namespace Chess {
         void calculateNextBestMoves();
         void writeFile(const string& fileName);
         void writeFileBinary(const string& fileName);
+        ZobristHash* readFileBinary(const string& fileName, BTree& bTree, uint64_t& size);
     };
 }

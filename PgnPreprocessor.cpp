@@ -164,4 +164,38 @@ namespace Chess {
         }
     }
 
+    ZobristHash* PgnPreprocessor::readFileBinary(const string &fileName, BTree& bTree, uint64_t& size) {
+        ifstream file(fileName, ios::binary);
+        uint64_t totalSuccessfulHashes = 0;
+
+        file.read((char*)ZobristHash::randNums.data(), 781*8);
+        file.read((char *)&totalSuccessfulHashes, 8);
+
+        size = totalSuccessfulHashes;
+
+        ZobristHash* arr = new ZobristHash[size];
+
+        int loc = file.tellg();
+
+        hash tempHash;
+        NextMove tempMove;
+
+        for(uint64_t i = 0; i < totalSuccessfulHashes; i++){
+            //std::cout << i << std::endl;
+            file.read((char*)&tempHash, 8);
+            file.read((char*)&tempMove, 2);
+            bTree.insertHash(tempHash, tempMove);
+        }
+
+        file.seekg(loc);
+
+        for(uint64_t i = 0; i < totalSuccessfulHashes; i++){
+            file.read((char*)&arr[i].Data, 8);
+            file.read((char*)&arr[i].bestMove, 2);
+        }
+
+        return arr;
+
+    }
+
 }
