@@ -18,4 +18,4 @@ For formatting the pgn files into a usable format, we use pgn-extract which is l
 under the GNU General Public License https://www.cs.kent.ac.uk/people/staff/djb/pgn-extract/.
 
 For using pgn-extract use the following command:
-pgn-extract -oout.pgn -Whalg -w99999 --nochecks --nocomments test.pgn
+pgn-extract -oout.pgn -Whalg -w99999 --nochecks --nocomments --nonags --novars --quiet test.pgn
