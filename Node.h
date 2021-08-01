@@ -22,8 +22,20 @@ namespace Chess {
 
         Node(int size, bool l) {
             keys.reserve(size);
-            children.reserve(size+1);
+            children.reserve(size + 1);
             leaf = l;
+        }
+
+        ~Node() {
+            //std::cout << keys.size() << std::endl;
+            for (int i = 0; i < keys.size(); i++) {
+                delete keys[i];
+            }
+            for (int i = 0; i < children.size(); i++) {
+                if (children[i]){
+                    delete children[i];
+                }
+            }
         }
 
         int binarySearch(hash Data) {

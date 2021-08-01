@@ -11,6 +11,8 @@ namespace Chess {
     public:
         BTree();
 
+        ~BTree();
+
         void insertHash(ZobristHash *pointer);
 
         void insertHash(hash Data, NextMove bestMove);
