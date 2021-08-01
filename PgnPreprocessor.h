@@ -16,7 +16,7 @@ using std::set;
 namespace Chess {
     class PgnPreprocessor {
     private:
-        unordered_map<hash, unordered_map<NextMove, unsigned int>> hashStorage; // Inner map keeps track of how many times a NextMove occurs.
+        unordered_map<hash, unordered_map<NextMove, unsigned long long>> hashStorage; // Inner map keeps track of how many times a NextMove occurs.
         unordered_map<hash, NextMove> calculatedStorage; // Stores next best move for board state.
     public:
         void readFile(const string& fileName);

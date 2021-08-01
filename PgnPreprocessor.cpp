@@ -86,7 +86,7 @@ namespace Chess {
                 // the game has finished
                 break;
             } else {
-                unordered_map<NextMove, unsigned int>& currMoveStore = hashStorage[game.getHash()];
+                unordered_map<NextMove, unsigned long long>& currMoveStore = hashStorage[game.getHash()];
 
                 NextMove nextWhiteMove = game.generateMove(whiteMove, false);
                 if (currMoveStore.find(nextWhiteMove) == currMoveStore.end())
@@ -102,7 +102,7 @@ namespace Chess {
                 // the game has finished
                 break;
             } else {
-                unordered_map<NextMove, unsigned int>& currMoveStore = hashStorage[game.getHash()];
+                unordered_map<NextMove, unsigned long long>& currMoveStore = hashStorage[game.getHash()];
 
                 NextMove nextBlackMove = game.generateMove(blackMove, true);
                 if (currMoveStore.find(nextBlackMove) == currMoveStore.end())
