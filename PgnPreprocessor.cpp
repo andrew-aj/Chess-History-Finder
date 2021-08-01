@@ -35,7 +35,7 @@ namespace Chess {
                 }
 
                 simulateGame(moveText, result);
-                cout << "simulate complete." << endl;
+                //cout << "simulate complete." << endl;
             }
         }
     }

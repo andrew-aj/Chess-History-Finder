@@ -3,6 +3,7 @@
 namespace Chess {
     BoardStorage::BoardStorage() {
 //        blackToMove = false;
+        storage = 0;
         board.fill(Pieces::NoPiece);
         board[0] = Pieces::WRook;
         board[1] = Pieces::WKnight;
@@ -31,7 +32,6 @@ namespace Chess {
     }
 
     void BoardStorage::calculateZobristHash() {
-        storage = 0;
         for (int i = 0; i < board.size(); i++) {
             if (board[i] == Pieces::NoPiece)
                 continue;
@@ -137,26 +137,26 @@ namespace Chess {
                 storage ^= ZobristHash::randNums[calculateZobristIndex(secondPos - 1)];
 
                 return;
-            } else if (board[firstPos] == Pieces::WKing){
+            } else if (board[firstPos] == Pieces::WKing) {
                 if (wKingCastle)
                     storage ^= ZobristHash::randNums[770];
                 if (wQueenCastle)
                     storage ^= ZobristHash::randNums[769];
                 wKingCastle = false;
                 wQueenCastle = false;
-            } else if (board[firstPos] == Pieces::WRook && (wQueenCastle || wKingCastle)){
-                if (firstPos == 0 && wQueenCastle){
+            } else if (board[firstPos] == Pieces::WRook && (wQueenCastle || wKingCastle)) {
+                if (firstPos == 0 && wQueenCastle) {
                     wQueenCastle = false;
                     storage ^= ZobristHash::randNums[769];
-                }else if (firstPos == 7 && wKingCastle){
+                } else if (firstPos == 7 && wKingCastle) {
                     wKingCastle = false;
                     storage ^= ZobristHash::randNums[770];
                 }
-            }else if (board[secondPos] == Pieces::BRook && (bQueenCastle || bKingCastle)){
-                if (firstPos == 56 && bQueenCastle){
+            } else if (board[secondPos] == Pieces::BRook && (bQueenCastle || bKingCastle)) {
+                if (firstPos == 56 && bQueenCastle) {
                     bQueenCastle = false;
                     storage ^= ZobristHash::randNums[771];
-                }else if (firstPos == 63 && bKingCastle){
+                } else if (firstPos == 63 && bKingCastle) {
                     bKingCastle = false;
                     storage ^= ZobristHash::randNums[772];
                 }
@@ -246,26 +246,26 @@ namespace Chess {
                 storage ^= ZobristHash::randNums[calculateZobristIndex(secondPos - 1)];
 
                 return;
-            }else if (board[firstPos] == Pieces::BKing){
+            } else if (board[firstPos] == Pieces::BKing) {
                 if (bKingCastle)
                     storage ^= ZobristHash::randNums[772];
                 if (bQueenCastle)
                     storage ^= ZobristHash::randNums[771];
                 bKingCastle = false;
                 bQueenCastle = false;
-            } else if (board[firstPos] == Pieces::BRook && (bQueenCastle || bKingCastle)){
-                if (firstPos == 56 && bQueenCastle){
+            } else if (board[firstPos] == Pieces::BRook && (bQueenCastle || bKingCastle)) {
+                if (firstPos == 56 && bQueenCastle) {
                     bQueenCastle = false;
                     storage ^= ZobristHash::randNums[771];
-                }else if (firstPos == 63 && bKingCastle){
+                } else if (firstPos == 63 && bKingCastle) {
                     bKingCastle = false;
                     storage ^= ZobristHash::randNums[772];
                 }
-            }else if (board[secondPos] == Pieces::WRook && (wQueenCastle || wKingCastle)){
-                if (firstPos == 0 && wQueenCastle){
+            } else if (board[secondPos] == Pieces::WRook && (wQueenCastle || wKingCastle)) {
+                if (firstPos == 0 && wQueenCastle) {
                     wQueenCastle = false;
                     storage ^= ZobristHash::randNums[769];
-                }else if (firstPos == 7 && wKingCastle){
+                } else if (firstPos == 7 && wKingCastle) {
                     wKingCastle = false;
                     storage ^= ZobristHash::randNums[770];
                 }
@@ -362,11 +362,16 @@ namespace Chess {
     }
 
     uint8_t BoardStorage::boardToBin(const string &pos) {
-        try {
-            return (pos[0] - 'a') + (std::stoi(pos.substr(1)) - 1) * 8;
-        } catch (std::exception &e) {
-            std::cout << "boardToBin failed with input " << pos << std::endl;
-            throw e;
+        if (!pos.empty()) {
+            try {
+                return (pos[0] - 'a') + (std::stoi(pos.substr(1)) - 1) * 8;
+            } catch (std::exception &e) {
+                std::cout << "boardToBin failed with input " << pos << std::endl;
+                throw e;
+            }
+        } else {
+
+
         }
     }
 
