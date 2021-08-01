@@ -86,13 +86,13 @@ namespace Chess {
             return nullptr;
 
         int loc = node->binarySearch(Data);
-        if (node->keys[loc]->Data != Data) {
+        if (loc < node->keys.size() && node->keys[loc]->Data == Data) {
+            return node->keys[loc];
+        } else {
             if (node->children.size() <= loc)
                 return nullptr;
             else
                 return findHash(Data, node->children[loc]);
-        } else {
-            return node->keys[loc];
         }
     }
 
