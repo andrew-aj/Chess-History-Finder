@@ -30,23 +30,11 @@ namespace Chess {
 
         sort.reserve(totalSuccessfulHashes);
 
-        int loc = file.tellg();
-
-        hash tempHash;
-        NextMove tempMove;
-
         for(uint64_t i = 0; i < totalSuccessfulHashes; i++){
             //std::cout << i << std::endl;
-            file.read((char*)&tempHash, 8);
-            file.read((char*)&tempMove, 2);
-            tree.insertHash(tempHash, tempMove);
-        }
-
-        file.seekg(loc);
-
-        for(uint64_t i = 0; i < totalSuccessfulHashes; i++){
             file.read((char*)&sort[i].Data, 8);
             file.read((char*)&sort[i].bestMove, 2);
+            tree.insertHash(sort[i].Data, sort[i].bestMove);
         }
     }
 }
