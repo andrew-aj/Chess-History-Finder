@@ -329,8 +329,12 @@ namespace Chess {
     }
 
     NextMove BoardStorage::generateMove(const string &pgnMove, bool blackToMove) {
-        NextMove move;
-        move += 0x8000 * (!(blackWon() ^ blackToMove));
+        NextMove move = 0;
+        if (isDraw()) {
+            move += 0x8000;
+        } else {
+            move += 0x8000 * (!(blackWon() ^ blackToMove));
+        }
         move += 0x4000 * blackToMove;
         if (pgnMove.find('-') != string::npos) {
             move += boardToBin(pgnMove.substr(0, 2)) << 8;
