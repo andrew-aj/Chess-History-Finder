@@ -27,6 +27,8 @@ namespace Chess {
         bool bottomLeftCastleRights = true;
         bool bottomRightCastleRights = true;
 
+        std::ofstream f("time.txt");
+
         string selectedPiece = "WPawn";
         highlighters["pieceSelection"].setPosition(pieceSelection[selectedPiece].getPosition().x + 40, pieceSelection[selectedPiece].getPosition().y + 40);
 
@@ -121,8 +123,17 @@ namespace Chess {
                     board.calculateZobristHash(bottomRightCastleRights, bottomLeftCastleRights, topRightCastleRights, topLeftCastleRights, blackToMove);
                     hash val = board.getHash();
 
+                    auto start = std::chrono::high_resolution_clock::now();
                     ZobristHash* zhBTree = tree.findHash(val);
+                    auto end = std::chrono::high_resolution_clock::now();
+                    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+                    f << "B Tree search took " << duration.count() << " milliseconds" << std::endl;
+
+                    start = std::chrono::high_resolution_clock::now();
                     ZobristHash* zhHeap = &*std::lower_bound(sort.begin(), sort.end(), ZobristHash(val, 0));
+                    end = std::chrono::high_resolution_clock::now();
+                    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+                    f << "Heap sorted array took " << duration.count() << " milliseconds" << std::endl;
 
                     if (zhHeap->Data == val)
                         std::cout << zhHeap->hashToMove() << std::endl;
@@ -216,12 +227,28 @@ namespace Chess {
             file.read((char*)&sort[i].bestMove, 2);
         }
 
+        auto start = std::chrono::high_resolution_clock::now();
+
         for (unsigned int i = 0; i < sort.size(); i++) {
             tree.insertHash(sort[i].Data, sort[i].bestMove);
         }
 
+        auto end = std::chrono::high_resolution_clock::now();
+
+        std::ofstream f("time.txt");
+
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        f << "B Tree insertions took " << duration.count() << " milliseconds" << std::endl;
+
+        start = std::chrono::high_resolution_clock::now();
 
         Heap::HeapSort(sort);
+
+        end = std::chrono::high_resolution_clock::now();
+
+        duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+        f << "Heap sort took " << duration.count() << " milliseconds" << std::endl;
     }
 
     void GUI::initializePieceSelectionSprites() {
