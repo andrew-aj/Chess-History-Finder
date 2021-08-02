@@ -31,6 +31,8 @@ namespace Chess {
 
         static bool initialized();
 
+        std::string hashToMove();
+
         ZobristHash();
 
         ZobristHash(hash data, NextMove bestMove);
