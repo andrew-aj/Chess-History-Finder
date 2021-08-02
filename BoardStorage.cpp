@@ -408,7 +408,7 @@ namespace Chess {
         board[3] = Pieces::WQueen;
         board[4] = Pieces::WKing;
         board[5] = Pieces::WBishop;
-        board[6] = Pieces::WKing;
+        board[6] = Pieces::WKnight;
         board[7] = Pieces::WRook;
         for (int i = 56; i < 64; i++) {
             board[i] = static_cast<Pieces>(board[i - 56] + 0b1000);

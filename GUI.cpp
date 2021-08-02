@@ -123,8 +123,8 @@ namespace Chess {
                 if (buttons["submit"].getGlobalBounds().contains(translated_pos)) {
                     board.calculateZobristHash(bottomRightCastleRights, bottomLeftCastleRights, topRightCastleRights, topLeftCastleRights, blackToMove);
                     hash val = board.getHash();
-
-
+                    ZobristHash* zh = tree.findHash(val);
+                    std::cout << zh->bestMove << std::endl;
                 }
             }
 
