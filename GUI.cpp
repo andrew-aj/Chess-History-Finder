@@ -33,7 +33,8 @@ namespace Chess {
         f << htime << std::endl;
 
         string selectedPiece = "WPawn";
-        highlighters["pieceSelection"].setPosition(pieceSelection[selectedPiece].getPosition().x + 40, pieceSelection[selectedPiece].getPosition().y + 40);
+        highlighters["pieceSelection"].setPosition(pieceSelection[selectedPiece].getPosition().x + 40,
+                                                   pieceSelection[selectedPiece].getPosition().y + 40);
 
         while (window.isOpen()) {
             sf::Event event;
@@ -52,18 +53,20 @@ namespace Chess {
             window.draw(bg);
 
 
-
             if (leftClicked && !lastLeftClicked && window.hasFocus()) {
                 for (auto &iter : pieceSelection) {
                     if (iter.second.getGlobalBounds().contains(translated_pos)) {
-                        highlighters["pieceSelection"].setPosition(iter.second.getPosition().x + 40, iter.second.getPosition().y + 40);
+                        highlighters["pieceSelection"].setPosition(iter.second.getPosition().x + 40,
+                                                                   iter.second.getPosition().y + 40);
                         selectedPiece = iter.first;
                     }
                 }
 
-                for (unsigned int i = 0; i < gameBoard.size(); i++) { // MAKE SURE YOU USE REFERENCE ITER WHEN CHANGING TEXTURE
+                for (unsigned int i = 0;
+                     i < gameBoard.size(); i++) { // MAKE SURE YOU USE REFERENCE ITER WHEN CHANGING TEXTURE
                     auto iter = gameBoard.begin() + i;
-                    if (iter->first.getGlobalBounds().contains(translated_pos) && iter->second != stringToPieces[selectedPiece]) {
+                    if (iter->first.getGlobalBounds().contains(translated_pos) &&
+                        iter->second != stringToPieces[selectedPiece]) {
                         iter->first.setTexture(TextureManager::GetTexture(selectedPiece));
                         iter->second = stringToPieces[selectedPiece];
                         board.addPiece(iter->second, i);
@@ -113,7 +116,8 @@ namespace Chess {
                     for (unsigned int i = 0; i < board.getBoard().size(); i++) {
                         gameBoard[i].second = board.getBoard()[i];
                         if (board.getBoard()[i] != NoPiece)
-                            gameBoard[i].first.setTexture(TextureManager::GetTexture(piecesToString[board.getBoard()[i]]));
+                            gameBoard[i].first.setTexture(
+                                    TextureManager::GetTexture(piecesToString[board.getBoard()[i]]));
                         else
                             gameBoard[i].first.setTexture(TextureManager::GetTexture("transparentSquare"));
                     }
@@ -127,40 +131,51 @@ namespace Chess {
                 }
 
                 if (buttons["submit"].getGlobalBounds().contains(translated_pos)) {
-                    board.calculateZobristHash(bottomRightCastleRights, bottomLeftCastleRights, topRightCastleRights, topLeftCastleRights, blackToMove);
+                    board.calculateZobristHash(bottomRightCastleRights, bottomLeftCastleRights, topRightCastleRights,
+                                               topLeftCastleRights, blackToMove);
                     hash val = board.getHash();
 
                     auto start = std::chrono::high_resolution_clock::now();
-                    ZobristHash* zhBTree = tree.findHash(val);
+                    ZobristHash *zhBTree = tree.findHash(val);
                     auto end = std::chrono::high_resolution_clock::now();
                     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
                     f << "B Tree search took " << duration.count() << " nanoseconds" << std::endl;
 
                     start = std::chrono::high_resolution_clock::now();
-                    ZobristHash* zhHeap = &*std::lower_bound(sort.begin(), sort.end(), ZobristHash(val, 0));
+                    ZobristHash zhHeap = *std::lower_bound(sort.begin(), sort.end(), ZobristHash(val, 0));
                     end = std::chrono::high_resolution_clock::now();
                     duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
                     f << "Heap sorted array took " << duration.count() << " nanoseconds" << std::endl;
 
-                    if (zhHeap->Data == val)
-                        std::cout << zhHeap->hashToMove() << std::endl;
+                    if (zhHeap.Data == val)
+                        std::cout << zhHeap.hashToMove() << std::endl;
                     else
                         std::cout << "No Move" << std::endl;
-
 
                     if (zhBTree != nullptr) {
                         std::cout << zhBTree->hashToMove() << std::endl;
                         text.setString(zhBTree->hashToMove());
+                        if (zhBTree->bestMove != zhHeap.bestMove) {
+                            std::cout << "Error" << std::endl;
+                            text.setString("Error!");
+                        }
                     } else {
-                        std::cout << "No Move" << std::endl;
-                        text.setString("No Move");
+                        if (zhHeap.Data == val) {
+                            std::cout << "Error" << std::endl;
+                            text.setString("Error!");
+                        } else {
+                            std::cout << "No Move" << std::endl;
+                            text.setString("No Move");
+                        }
                     }
+
                     text.setOrigin(text.getGlobalBounds().width / 2, 0);
                 }
             }
 
             if (rightClicked && !lastRightClicked && window.hasFocus()) {
-                for (unsigned int i = 0; i < gameBoard.size(); i++) { // MAKE SURE YOU USE REFERENCE ITER WHEN CHANGING TEXTURE
+                for (unsigned int i = 0;
+                     i < gameBoard.size(); i++) { // MAKE SURE YOU USE REFERENCE ITER WHEN CHANGING TEXTURE
                     auto iter = gameBoard.begin() + i;
                     if (iter->first.getGlobalBounds().contains(translated_pos) && iter->second != NoPiece) {
                         iter->first.setTexture(TextureManager::GetTexture("transparentSquare"));
@@ -171,9 +186,11 @@ namespace Chess {
             }
 
             if (blackToMove) {
-                highlighters["nextColor"].setPosition(buttons["blackNext"].getPosition().x + 50, buttons["blackNext"].getPosition().y + 20);
+                highlighters["nextColor"].setPosition(buttons["blackNext"].getPosition().x + 50,
+                                                      buttons["blackNext"].getPosition().y + 20);
             } else {
-                highlighters["nextColor"].setPosition(buttons["whiteNext"].getPosition().x + 50, buttons["whiteNext"].getPosition().y + 20);
+                highlighters["nextColor"].setPosition(buttons["whiteNext"].getPosition().x + 50,
+                                                      buttons["whiteNext"].getPosition().y + 20);
             }
 
             if (topLeftCastleRights)
@@ -197,17 +214,17 @@ namespace Chess {
                 castleToggles["bottomRight"].setTexture(TextureManager::GetTexture("noCastle"));
 
 
-            for (const auto& iter : gameBoard)
+            for (const auto &iter : gameBoard)
                 window.draw(iter.first);
-            for (const auto& iter : pieceSelection)
+            for (const auto &iter : pieceSelection)
                 window.draw(iter.second);
-            for (const auto& iter : buttons)
+            for (const auto &iter : buttons)
                 window.draw(iter.second);
-            for (const auto& iter : castleToggles)
+            for (const auto &iter : castleToggles)
                 window.draw(iter.second);
 
 
-            for (const auto& iter : highlighters)
+            for (const auto &iter : highlighters)
                 window.draw(iter.second);
 
             window.draw(text);
@@ -223,15 +240,15 @@ namespace Chess {
         std::fstream file(fileName, std::ios::binary | std::ios::in);
         uint64_t totalSuccessfulHashes = 0;
 
-        file.read((char*)ZobristHash::randNums.data(), 781*8);
-        file.read((char *)&totalSuccessfulHashes, 8);
+        file.read((char *) ZobristHash::randNums.data(), 781 * 8);
+        file.read((char *) &totalSuccessfulHashes, 8);
 
         sort.resize(totalSuccessfulHashes);
 
-        for(uint64_t i = 0; i < totalSuccessfulHashes; i++){
+        for (uint64_t i = 0; i < totalSuccessfulHashes; i++) {
             //std::cout << i << std::endl;
-            file.read((char*)&sort[i].Data, 8);
-            file.read((char*)&sort[i].bestMove, 2);
+            file.read((char *) &sort[i].Data, 8);
+            file.read((char *) &sort[i].bestMove, 2);
         }
 
         auto start = std::chrono::high_resolution_clock::now();
