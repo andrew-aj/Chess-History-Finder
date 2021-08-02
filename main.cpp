@@ -7,6 +7,8 @@
 using Chess::ZobristHash;
 
 int main(int argc, const char *argv[]) {
+    //Start gui with 1 argument which is the preprocessed file to load in
+    //Start preprocess with 2 arguments which is the raw file and the file to store the processed information in
 
     /* Code to start gui */
     if (argc == 2) {

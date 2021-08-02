@@ -6,6 +6,7 @@
 
 namespace Chess {
 
+    //Stores the pieces in binary using an enum that is 1 byte in size for each
     enum Pieces: uint8_t {
         WPawn = 0b0000,
         WRook = 0b0001,
@@ -22,6 +23,7 @@ namespace Chess {
         NoPiece = 0b1111
     };
 
+    //Converts text to the correct piece
     static std::unordered_map<std::string, Pieces> stringToPieces {
             {"WPawn", WPawn},
             {"WRook", WRook},
@@ -38,6 +40,7 @@ namespace Chess {
             {"NoPiece", NoPiece}
     };
 
+    //Converts the pieces to the correct text
     static std::unordered_map<Pieces, std::string> piecesToString {
             {WPawn, "WPawn"},
             {WRook, "WRook"},

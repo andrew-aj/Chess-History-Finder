@@ -11,6 +11,7 @@
 namespace Chess {
 
     struct ZobristHash {
+        //Stores the zobrist hash
         hash Data;
 
         //Storing the next best moves in NextMove struct.
@@ -29,14 +30,18 @@ namespace Chess {
         //Generates the random numbers to create zobrist hashes
         static void generateRandomNumbers();
 
+        //Returns if it's initialized if all values aren't 0
         static bool initialized();
 
+        //Converts a given NextMove binary number to a string in hyphenated notation
         std::string hashToMove();
 
         ZobristHash();
 
+        //Constructor
         ZobristHash(hash data, NextMove bestMove);
 
+        //Auto generated operators
         bool operator==(const ZobristHash &rhs) const;
 
         bool operator<(const ZobristHash &rhs) const;
