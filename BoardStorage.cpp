@@ -203,7 +203,7 @@ namespace Chess {
                 storage ^= ZobristHash::randNums[calculateZobristIndex(secondPos + 1)];
 
                 return;
-            } else if (wKingCastle && firstPos == 60 && secondPos == 62 && board[firstPos] == Pieces::BKing &&
+            } else if (bKingCastle && firstPos == 60 && secondPos == 62 && board[firstPos] == Pieces::BKing &&
                        board[63] == Pieces::BRook) {
                 bQueenCastle = false;
                 bKingCastle = false;
