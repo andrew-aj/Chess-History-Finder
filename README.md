@@ -25,7 +25,7 @@ pgn-extract -oout.pgn -Whalg -w99999 --nochecks --nocomments --nonags --novars -
 For chess piece assets, we modified the pieces from this open source chess asset pack:
 https://opengameart.org/content/chess-pieces-and-board-squares
 
-The font used for outputting moves in the gui is Times Newer Roman, and open source font:
+The font used for outputting moves in the gui is Times Newer Roman, an open source font:
 https://timesnewerroman.com/
 
 This free to use flag icon was used for the castling rights buttons:
