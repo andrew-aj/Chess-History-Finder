@@ -1,7 +1,5 @@
 #include "PgnPreprocessor.h"
 #include "BoardStorage.h"
-#include "NextMove.h"
-#include "ZobristHash.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>

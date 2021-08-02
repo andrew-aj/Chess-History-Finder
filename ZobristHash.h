@@ -6,7 +6,6 @@
 #include <random>
 
 #include "Defines.h"
-#include "NextMove.h"
 
 namespace Chess {
 

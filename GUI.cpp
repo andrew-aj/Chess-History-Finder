@@ -2,7 +2,6 @@
 #include "Heap.h"
 #include "TextureManager.h"
 #include <iostream>
-#include <algorithm>
 
 namespace Chess {
     //Starts the GUI program

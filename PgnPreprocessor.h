@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Defines.h"
-#include "NextMove.h"
 #include "BTree.h"
 #include <string>
 #include <vector>

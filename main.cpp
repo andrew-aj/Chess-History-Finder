@@ -1,8 +1,5 @@
-#include <iostream>
 #include "GUI.h"
 #include "PgnPreprocessor.h"
-#include "ZobristHash.h"
-#include "Heap.h"
 
 using Chess::ZobristHash;
 

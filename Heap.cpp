@@ -1,9 +1,7 @@
 #include "Heap.h"
-#include <bitset>
 #include <string>
 #include <iostream>
 using std::string;
-using std::bitset;
 using std::cout;
 using std::endl;
 
