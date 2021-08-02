@@ -29,6 +29,9 @@ namespace Chess {
 
         std::ofstream f("time.txt");
 
+        f << btime << std::endl;
+        f << htime << std::endl;
+
         string selectedPiece = "WPawn";
         highlighters["pieceSelection"].setPosition(pieceSelection[selectedPiece].getPosition().x + 40, pieceSelection[selectedPiece].getPosition().y + 40);
 
@@ -100,6 +103,8 @@ namespace Chess {
                     topRightCastleRights = true;
                     bottomLeftCastleRights = true;
                     bottomRightCastleRights = true;
+
+                    text.setString("");
                 }
 
                 if (buttons["default"].getGlobalBounds().contains(translated_pos)) {
@@ -117,6 +122,8 @@ namespace Chess {
                     topRightCastleRights = true;
                     bottomLeftCastleRights = true;
                     bottomRightCastleRights = true;
+
+                    text.setString("");
                 }
 
                 if (buttons["submit"].getGlobalBounds().contains(translated_pos)) {
@@ -126,14 +133,14 @@ namespace Chess {
                     auto start = std::chrono::high_resolution_clock::now();
                     ZobristHash* zhBTree = tree.findHash(val);
                     auto end = std::chrono::high_resolution_clock::now();
-                    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-                    f << "B Tree search took " << duration.count() << " milliseconds" << std::endl;
+                    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+                    f << "B Tree search took " << duration.count() << " nanoseconds" << std::endl;
 
                     start = std::chrono::high_resolution_clock::now();
                     ZobristHash* zhHeap = &*std::lower_bound(sort.begin(), sort.end(), ZobristHash(val, 0));
                     end = std::chrono::high_resolution_clock::now();
-                    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-                    f << "Heap sorted array took " << duration.count() << " milliseconds" << std::endl;
+                    duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+                    f << "Heap sorted array took " << duration.count() << " nanoseconds" << std::endl;
 
                     if (zhHeap->Data == val)
                         std::cout << zhHeap->hashToMove() << std::endl;
@@ -213,7 +220,7 @@ namespace Chess {
     }
 
     void GUI::readFileBinary(const string &fileName) {
-        std::ifstream file(fileName, std::ios::binary);
+        std::fstream file(fileName, std::ios::binary | std::ios::in);
         uint64_t totalSuccessfulHashes = 0;
 
         file.read((char*)ZobristHash::randNums.data(), 781*8);
@@ -235,10 +242,10 @@ namespace Chess {
 
         auto end = std::chrono::high_resolution_clock::now();
 
-        std::ofstream f("time.txt");
+        file.close();
 
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        f << "B Tree insertions took " << duration.count() << " milliseconds" << std::endl;
+        btime = "B Tree insertions took " + std::to_string(duration.count()) + " milliseconds";
 
         start = std::chrono::high_resolution_clock::now();
 
@@ -248,7 +255,7 @@ namespace Chess {
 
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-        f << "Heap sort took " << duration.count() << " milliseconds" << std::endl;
+        htime = "Heap sort took " + std::to_string(duration.count()) + " milliseconds";
     }
 
     void GUI::initializePieceSelectionSprites() {
@@ -344,7 +351,6 @@ namespace Chess {
     void GUI::initializeText() {
         font.loadFromFile("times.ttf");
         text.setFont(font);
-        text.setString("fuck");
         text.setCharacterSize(44);
         text.setFillColor(sf::Color(230, 198, 156));
         text.setOrigin(text.getGlobalBounds().width / 2, 0);

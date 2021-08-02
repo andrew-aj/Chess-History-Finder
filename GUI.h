@@ -30,6 +30,9 @@ namespace Chess {
         BoardStorage board;
         BTree tree;
         std::vector<ZobristHash> sort;
+
+        std::string btime;
+        std::string htime;
     public:
         void initializePieceSelectionSprites();
         void initializeGameBoard();
