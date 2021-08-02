@@ -198,9 +198,9 @@ namespace Chess {
 
                     auto end = std::chrono::high_resolution_clock::now();
                     //Calculate the duration
-                    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+                    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
                     //Write the duration to the file
-                    f << "B Tree search took " << duration.count() << " nanoseconds" << std::endl;
+                    f << "B Tree search took " << duration.count() << " microseconds" << std::endl;
 
                     //Time the amount taken for the heap sorted array to find the hash
                     start = std::chrono::high_resolution_clock::now();
@@ -209,12 +209,12 @@ namespace Chess {
 
                     end = std::chrono::high_resolution_clock::now();
                     //Calculate the duration
-                    duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+                    duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
                     //Write the duration to the file
-                    f << "Heap sorted array took " << duration.count() << " nanoseconds" << std::endl;
+                    f << "Heap sorted array took " << duration.count() << " microseconds" << std::endl;
 
                     //Check if a hash was found
-                    if (zhBTree != nullptr) {
+                    if (zhBTree != nullptr && zhHeap.Data == val) {
                         //Output it
                         std::cout << zhBTree->hashToMove() << std::endl;
                         text.setString(zhBTree->hashToMove());
@@ -313,6 +313,8 @@ namespace Chess {
 
     //Read the binary file
     void GUI::readFileBinary(const string &fileName) {
+        std::cout << "GUI starting..." << std::endl;
+
         //Open the file
         std::fstream file(fileName, std::ios::binary | std::ios::in);
         uint64_t totalSuccessfulHashes = 0;

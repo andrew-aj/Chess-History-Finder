@@ -1,6 +1,7 @@
 #include "Heap.h"
 #include <string>
 #include <iostream>
+
 using std::string;
 using std::cout;
 using std::endl;
@@ -12,6 +13,7 @@ namespace Chess {
             return;
         }
 
+        // Swaps node with parent if parent is greater.
         while (node->parent != nullptr && node->parent->value > node->value) {
             swapNodeValues(node->parent, node);
             node = node->parent;
@@ -24,8 +26,10 @@ namespace Chess {
             return;
         }
 
+        // As long as both children exist.
         while (node->left != nullptr && node->right != nullptr) {
-            if (node->value > node->left->value && node->value > node->right->value) { // greater than both children
+            // Node is greater than both children.
+            if (node->value > node->left->value && node->value > node->right->value) {
                 if (node->left->value < node->right->value) {
                     swapNodeValues(node->left, node);
                     node = node->left;
@@ -33,24 +37,23 @@ namespace Chess {
                     swapNodeValues(node->right, node);
                     node = node->right;
                 }
-            } else if (node->value > node->left->value) {
+            } else if (node->value > node->left->value) { // Node is greater than only left child.
                 swapNodeValues(node->left, node);
                 node = node->left;
-            } else if (node->value > node->right->value) {
+            } else if (node->value > node->right->value) { // Node is greater than only right child.
                 swapNodeValues(node->right, node);
                 node = node->right;
-            } else { // less than both children
+            } else { // Node is less than both children.
                 return;
             }
         }
 
+        // Node only has one child at this point, checks if node is greater.
         if (node->left != nullptr && node->value > node->left->value) {
             swapNodeValues(node->left, node);
             node = node->left;
         }
     }
-
-
 
     void Heap::insert(const Chess::ZobristHash &value) {
         if (root == nullptr) {
@@ -59,7 +62,7 @@ namespace Chess {
             return;
         }
 
-        HeapNode* insertParent = getInsertParent();
+        HeapNode *insertParent = getInsertParent();
         if (insertParent->left == nullptr) {
             insertParent->left = new HeapNode(value, insertParent);
             heapifyUp(insertParent->left);
@@ -74,7 +77,7 @@ namespace Chess {
             return;
         }
 
-        cout << "something went very wrong :("  << endl;
+        cout << "something went very wrong :(" << endl;
     }
 
     void Heap::removeTop() {
@@ -89,7 +92,8 @@ namespace Chess {
             return;
         }
 
-        HeapNode* rml = getRightMostLeaf();
+        // Sets root to bottom-right most leaf, then calls heapifyDown to maintain heap properties.
+        HeapNode *rml = getRightMostLeaf();
         root->value = rml->value;
         if (rml == rml->parent->left) {
             rml->parent->left = nullptr;
@@ -104,15 +108,17 @@ namespace Chess {
         heapifyDown(root);
     }
 
-    Heap::HeapNode *Heap::nthLeaf(const uint64_t& n) {
+    Heap::HeapNode *Heap::nthLeaf(const uint64_t &n) {
         if (root == nullptr || n > size)
             return nullptr;
 
-        uint64_t binaryTraversal = n; // Traversal method found at https://stackoverflow.com/questions/51506395/how-can-one-find-the-last-right-most-node-on-the-last-level-of-tree-which-is-a
-        uint64_t leftMostMask = 0x8000000000000000;
-        HeapNode* nth = root;
+        // Idea to get traversal from nth node from https://stackoverflow.com/a/51509500
+        uint64_t binaryTraversal = n;
+        uint64_t leftMostMask = 0x8000000000000000; // Mask for leftmost bit in n.
+        HeapNode *nth = root;
         unsigned int rotateCount = 0;
 
+        // As long as there is a 0 in the leftmost bit of n.
         while (!(binaryTraversal & leftMostMask)) {
             binaryTraversal <<= 1;
             rotateCount++;
@@ -121,6 +127,7 @@ namespace Chess {
         binaryTraversal <<= 1; // Get rid of redundant 1 in beginning.
         rotateCount++;
 
+        // Goes through remaining bits in n, going left if bit = 0 and right if bit = 1.
         while (64 - rotateCount != 0) {
             if (binaryTraversal & leftMostMask)
                 nth = nth->right;
@@ -134,10 +141,12 @@ namespace Chess {
         return nth;
     }
 
+    // Bottom-right most node is the size-th node of the binary heap.
     Heap::HeapNode *Heap::getRightMostLeaf() {
         return nthLeaf(size);
     }
 
+    // Parent of any node's index is half of that node's index.
     Heap::HeapNode *Heap::getInsertParent() {
         return nthLeaf((size + 1) / 2);
     }
@@ -159,10 +168,10 @@ namespace Chess {
         return false;
     }
 
-    void Heap::HeapSort(vector<ZobristHash>& toSort) {
+    void Heap::HeapSort(vector<ZobristHash> &toSort) {
         Heap heap;
 
-        for (const auto& iter : toSort) {
+        for (const auto &iter : toSort) {
             heap.insert(iter);
         }
 

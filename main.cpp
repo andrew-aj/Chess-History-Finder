@@ -4,16 +4,16 @@
 using Chess::ZobristHash;
 
 int main(int argc, const char *argv[]) {
-    //Start gui with 1 argument which is the preprocessed file to load in
-    //Start preprocess with 2 arguments which is the raw file and the file to store the processed information in
+    // Start GUI with 1 argument: the preprocessed binary file to load in.
+    // Start preprocessor with 2 arguments: The raw pgn file and the preprecessed binary file to be outputted.
 
-    /* Code to start gui */
+    /* Code to start GUI. */
     if (argc == 2) {
         Chess::GUI gui;
         gui.readFileBinary(argv[1]);
         gui.startProgramWindow();
     } else if (argc == 3) {
-        /* Code to start preprocessor */
+    /* Code to start preprocessor. */
         Chess::ZobristHash::generateRandomNumbers();
         Chess::PgnPreprocessor preprocessor;
         preprocessor.readFile(argv[1]);

@@ -2,6 +2,7 @@
 
 #include "ZobristHash.h"
 #include <vector>
+
 using std::vector;
 
 namespace Chess {
@@ -9,11 +10,11 @@ namespace Chess {
     private:
         struct HeapNode {
             ZobristHash value;
-            HeapNode* parent;
-            HeapNode* left;
-            HeapNode* right;
+            HeapNode *parent;
+            HeapNode *left;
+            HeapNode *right;
 
-            explicit HeapNode(const ZobristHash& value, HeapNode* parent = nullptr) {
+            explicit HeapNode(const ZobristHash &value, HeapNode *parent = nullptr) {
                 this->value = value;
                 this->parent = parent;
                 this->left = nullptr;
@@ -21,23 +22,39 @@ namespace Chess {
             }
         };
 
-        HeapNode* root;
+        HeapNode *root;
         uint64_t size;
     public:
-        void heapifyUp(HeapNode* node);
-        void heapifyDown(HeapNode* node);
-        void insert(const ZobristHash& in);
+        void heapifyUp(HeapNode *node);
+
+        void heapifyDown(HeapNode *node);
+
+        void insert(const ZobristHash &in);
+
         void removeTop();
-        HeapNode* nthLeaf(const uint64_t& n);
-        HeapNode* getRightMostLeaf();
-        HeapNode* getInsertParent();
-        void swapNodeValues(HeapNode* first, HeapNode* second);
+
+        // Returns the nth node in the level traversal of the binary heap.
+        HeapNode *nthLeaf(const uint64_t &n);
+
+        // Returns the bottom-right most leaf in the tree.
+        HeapNode *getRightMostLeaf();
+
+        // Returns the parent of the node that would be inserted next.
+        HeapNode *getInsertParent();
+
+        // Swaps only the values of two nodes.
+        void swapNodeValues(HeapNode *first, HeapNode *second);
+
         bool isEmpty();
+
+        // Returns the node at the top of the binary heap.
         ZobristHash top();
 
-        static void HeapSort(vector<ZobristHash>& toSort);
+        // Constructs a heap from passed in vector, clears vector, and then pushes sorted values back into vector.
+        static void HeapSort(vector<ZobristHash> &toSort);
 
         Heap() : root(nullptr), size(0) {};
+
         ~Heap();
     };
 }
