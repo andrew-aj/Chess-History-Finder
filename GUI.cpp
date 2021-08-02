@@ -200,7 +200,7 @@ namespace Chess {
                     //Calculate the duration
                     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
                     //Write the duration to the file
-                    f << "B Tree search took " << duration.count() << " nanoseconds" << std::endl;
+                    f << "BTree search took: " << duration.count() << " nanoseconds." << std::endl;
 
                     //Time the amount taken for the heap sorted array to find the hash
                     start = std::chrono::high_resolution_clock::now();
@@ -211,7 +211,7 @@ namespace Chess {
                     //Calculate the duration
                     duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
                     //Write the duration to the file
-                    f << "Heap sorted array took " << duration.count() << " nanoseconds" << std::endl;
+                    f << "Heap sorted array search took: " << duration.count() << " nanoseconds." << std::endl;
 
                     //Check if a hash was found
                     if (zhBTree != nullptr && zhHeap.Data == val) {
@@ -349,7 +349,7 @@ namespace Chess {
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
         //Set the duration
-        btime = "B Tree insertions took " + std::to_string(duration.count()) + " milliseconds";
+        btime = "BTree insertions took: " + std::to_string(duration.count()) + " milliseconds.";
 
         //The the amount taken to build the tree based heap and then use heap sort
         start = std::chrono::high_resolution_clock::now();
@@ -361,7 +361,7 @@ namespace Chess {
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
         //Write the duration to file
-        htime = "Heap sort took " + std::to_string(duration.count()) + " milliseconds";
+        htime = "Heap sort took: " + std::to_string(duration.count()) + " milliseconds.";
     }
 
     //Initialize all of the sprites
