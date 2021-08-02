@@ -164,7 +164,7 @@ namespace Chess {
     void Heap::HeapSort(vector<ZobristHash>& toSort) {
         Heap heap;
 
-        for (auto iter : toSort) {
+        for (const auto& iter : toSort) {
             heap.insert(iter);
         }
 

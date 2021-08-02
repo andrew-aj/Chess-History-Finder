@@ -42,6 +42,8 @@ namespace Chess {
 
         void clear();
 
+        const std::array<Pieces, 64> &getBoard() const;
+
     private:
         uint8_t boardToBin(const string& pos);
 

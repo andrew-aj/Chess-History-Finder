@@ -377,6 +377,7 @@ namespace Chess {
     }
 
     void BoardStorage::calculateZobristHash(bool wKC, bool wQC, bool bKC, bool bQC, bool blackToMove) {
+        storage = 0;
         for (int i = 0; i < board.size(); i++) {
             if (board[i] == Pieces::NoPiece)
                 continue;
@@ -423,6 +424,10 @@ namespace Chess {
 
         bQueenCastle = true;
         bKingCastle = true;
+    }
+
+    const std::array<Pieces, 64> &BoardStorage::getBoard() const {
+        return board;
     }
 
 }

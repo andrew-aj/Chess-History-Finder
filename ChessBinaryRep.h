@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstdint>
+#include <unordered_map>
+#include <string>
 
 namespace Chess {
 
@@ -20,4 +22,35 @@ namespace Chess {
         NoPiece = 0b1111
     };
 
+    static std::unordered_map<std::string, Pieces> stringToPieces {
+            {"WPawn", WPawn},
+            {"WRook", WRook},
+            {"WKnight", WKnight},
+            {"WBishop", WBishop},
+            {"WQueen", WQueen},
+            {"WKing", WKing},
+            {"BPawn", BPawn},
+            {"BRook", BRook},
+            {"BKnight", BKnight},
+            {"BBishop", BBishop},
+            {"BQueen", BQueen},
+            {"BKing", BKing},
+            {"NoPiece", NoPiece}
+    };
+
+    static std::unordered_map<Pieces, std::string> piecesToString {
+            {WPawn, "WPawn"},
+            {WRook, "WRook"},
+            {WKnight, "WKnight"},
+            {WBishop, "WBishop"},
+            {WQueen, "WQueen"},
+            {WKing, "WKing"},
+            {BPawn, "BPawn"},
+            {BRook, "BRook"},
+            {BKnight, "BKnight"},
+            {BBishop, "BBishop"},
+            {BQueen, "BQueen"},
+            {BKing, "BKing"},
+            {NoPiece, "NoPiece"}
+    };
 }
