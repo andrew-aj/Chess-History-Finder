@@ -48,12 +48,12 @@ namespace Chess {
     std::string ZobristHash::hashToMove() {
         std::string hyphenatedMove;
         uint8_t from = (bestMove >> 8) & 0b111111;
-        hyphenatedMove += ((from + 1) % 8) + 'a';
-        hyphenatedMove += ((from + 1) / 8) + '1';
+        hyphenatedMove += ((from) % 8) + 'a';
+        hyphenatedMove += ((from) / 8) + '1';
         uint8_t to = (bestMove >> 2) & 0b111111;
         hyphenatedMove += '-';
-        hyphenatedMove += ((to + 1) % 8) + 'a';
-        hyphenatedMove += ((to + 1) / 8) + '1';
+        hyphenatedMove += ((to) % 8) + 'a';
+        hyphenatedMove += ((to) / 8) + '1';
         return hyphenatedMove;
     }
 }

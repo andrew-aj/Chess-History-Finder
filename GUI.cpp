@@ -1,6 +1,8 @@
 #include "GUI.h"
+#include "Heap.h"
 #include "TextureManager.h"
 #include <iostream>
+#include <algorithm>
 
 namespace Chess {
     void GUI::startProgramWindow() {
@@ -11,6 +13,7 @@ namespace Chess {
         initializeButtons();
         initializeHighlighters();
         initializeCastleToggles();
+        initializeText();
 
         sf::Sprite bg(TextureManager::GetTexture("bg"));
         board.clear();
@@ -45,7 +48,7 @@ namespace Chess {
 
 
 
-            if (leftClicked && !lastLeftClicked) {
+            if (leftClicked && !lastLeftClicked && window.hasFocus()) {
                 for (auto &iter : pieceSelection) {
                     if (iter.second.getGlobalBounds().contains(translated_pos)) {
                         highlighters["pieceSelection"].setPosition(iter.second.getPosition().x + 40, iter.second.getPosition().y + 40);
@@ -64,31 +67,15 @@ namespace Chess {
 
                 if (castleToggles["topLeft"].getGlobalBounds().contains(translated_pos)) {
                     topLeftCastleRights = !topLeftCastleRights;
-                    if (topLeftCastleRights)
-                        castleToggles["topLeft"].setTexture(TextureManager::GetTexture("yesCastle"));
-                    else
-                        castleToggles["topLeft"].setTexture(TextureManager::GetTexture("noCastle"));
                 }
                 if (castleToggles["topRight"].getGlobalBounds().contains(translated_pos)) {
                     topRightCastleRights = !topRightCastleRights;
-                    if (topRightCastleRights)
-                        castleToggles["topRight"].setTexture(TextureManager::GetTexture("yesCastle"));
-                    else
-                        castleToggles["topRight"].setTexture(TextureManager::GetTexture("noCastle"));
                 }
                 if (castleToggles["bottomLeft"].getGlobalBounds().contains(translated_pos)) {
                     bottomLeftCastleRights = !bottomLeftCastleRights;
-                    if (bottomLeftCastleRights)
-                        castleToggles["bottomLeft"].setTexture(TextureManager::GetTexture("yesCastle"));
-                    else
-                        castleToggles["bottomLeft"].setTexture(TextureManager::GetTexture("noCastle"));
                 }
                 if (castleToggles["bottomRight"].getGlobalBounds().contains(translated_pos)) {
                     bottomRightCastleRights = !bottomRightCastleRights;
-                    if (bottomRightCastleRights)
-                        castleToggles["bottomRight"].setTexture(TextureManager::GetTexture("yesCastle"));
-                    else
-                        castleToggles["bottomRight"].setTexture(TextureManager::GetTexture("noCastle"));
                 }
 
 
@@ -106,6 +93,11 @@ namespace Chess {
                         iter.first.setTexture(TextureManager::GetTexture("transparentSquare"));
                         iter.second = NoPiece;
                     }
+
+                    topLeftCastleRights = true;
+                    topRightCastleRights = true;
+                    bottomLeftCastleRights = true;
+                    bottomRightCastleRights = true;
                 }
 
                 if (buttons["default"].getGlobalBounds().contains(translated_pos)) {
@@ -118,17 +110,38 @@ namespace Chess {
                         else
                             gameBoard[i].first.setTexture(TextureManager::GetTexture("transparentSquare"));
                     }
+
+                    topLeftCastleRights = true;
+                    topRightCastleRights = true;
+                    bottomLeftCastleRights = true;
+                    bottomRightCastleRights = true;
                 }
 
                 if (buttons["submit"].getGlobalBounds().contains(translated_pos)) {
                     board.calculateZobristHash(bottomRightCastleRights, bottomLeftCastleRights, topRightCastleRights, topLeftCastleRights, blackToMove);
                     hash val = board.getHash();
-                    ZobristHash* zh = tree.findHash(val);
-                    std::cout << zh->bestMove << std::endl;
+
+                    ZobristHash* zhBTree = tree.findHash(val);
+                    ZobristHash* zhHeap = &*std::lower_bound(sort.begin(), sort.end(), ZobristHash(val, 0));
+
+                    if (zhHeap->Data == val)
+                        std::cout << zhHeap->hashToMove() << std::endl;
+                    else
+                        std::cout << "No Move" << std::endl;
+
+
+                    if (zhBTree != nullptr) {
+                        std::cout << zhBTree->hashToMove() << std::endl;
+                        text.setString(zhBTree->hashToMove());
+                    } else {
+                        std::cout << "No Move" << std::endl;
+                        text.setString("No Move");
+                    }
+                    text.setOrigin(text.getGlobalBounds().width / 2, 0);
                 }
             }
 
-            if (rightClicked && !lastRightClicked) {
+            if (rightClicked && !lastRightClicked && window.hasFocus()) {
                 for (unsigned int i = 0; i < gameBoard.size(); i++) { // MAKE SURE YOU USE REFERENCE ITER WHEN CHANGING TEXTURE
                     auto iter = gameBoard.begin() + i;
                     if (iter->first.getGlobalBounds().contains(translated_pos) && iter->second != NoPiece) {
@@ -145,6 +158,26 @@ namespace Chess {
                 highlighters["nextColor"].setPosition(buttons["whiteNext"].getPosition().x + 50, buttons["whiteNext"].getPosition().y + 20);
             }
 
+            if (topLeftCastleRights)
+                castleToggles["topLeft"].setTexture(TextureManager::GetTexture("yesCastle"));
+            else
+                castleToggles["topLeft"].setTexture(TextureManager::GetTexture("noCastle"));
+
+            if (topRightCastleRights)
+                castleToggles["topRight"].setTexture(TextureManager::GetTexture("yesCastle"));
+            else
+                castleToggles["topRight"].setTexture(TextureManager::GetTexture("noCastle"));
+
+            if (bottomLeftCastleRights)
+                castleToggles["bottomLeft"].setTexture(TextureManager::GetTexture("yesCastle"));
+            else
+                castleToggles["bottomLeft"].setTexture(TextureManager::GetTexture("noCastle"));
+
+            if (bottomRightCastleRights)
+                castleToggles["bottomRight"].setTexture(TextureManager::GetTexture("yesCastle"));
+            else
+                castleToggles["bottomRight"].setTexture(TextureManager::GetTexture("noCastle"));
+
 
             for (const auto& iter : gameBoard)
                 window.draw(iter.first);
@@ -159,6 +192,7 @@ namespace Chess {
             for (const auto& iter : highlighters)
                 window.draw(iter.second);
 
+            window.draw(text);
 
             window.display();
 
@@ -174,14 +208,20 @@ namespace Chess {
         file.read((char*)ZobristHash::randNums.data(), 781*8);
         file.read((char *)&totalSuccessfulHashes, 8);
 
-        sort.reserve(totalSuccessfulHashes);
+        sort.resize(totalSuccessfulHashes);
 
         for(uint64_t i = 0; i < totalSuccessfulHashes; i++){
             //std::cout << i << std::endl;
             file.read((char*)&sort[i].Data, 8);
             file.read((char*)&sort[i].bestMove, 2);
+        }
+
+        for (unsigned int i = 0; i < sort.size(); i++) {
             tree.insertHash(sort[i].Data, sort[i].bestMove);
         }
+
+
+        Heap::HeapSort(sort);
     }
 
     void GUI::initializePieceSelectionSprites() {
@@ -272,5 +312,15 @@ namespace Chess {
         sf::Sprite bottomRight(TextureManager::GetTexture("yesCastle"));
         bottomRight.setPosition(963, 683);
         castleToggles["bottomRight"] = bottomRight;
+    }
+
+    void GUI::initializeText() {
+        font.loadFromFile("times.ttf");
+        text.setFont(font);
+        text.setString("fuck");
+        text.setCharacterSize(44);
+        text.setFillColor(sf::Color(230, 198, 156));
+        text.setOrigin(text.getGlobalBounds().width / 2, 0);
+        text.setPosition(1140, 580 - 32);
     }
 }

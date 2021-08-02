@@ -23,6 +23,8 @@ namespace Chess {
         map<string, sf::Sprite> castleToggles;
         vector<pair<sf::Sprite, Pieces>> gameBoard;
         map<string, sf::Sprite> highlighters;
+        sf::Font font;
+        sf::Text text;
 
         BoardStorage board;
         BTree tree;
@@ -33,6 +35,7 @@ namespace Chess {
         void initializeButtons();
         void initializeHighlighters();
         void initializeCastleToggles();
+        void initializeText();
         void startProgramWindow();
 
         GUI() {

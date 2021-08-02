@@ -110,7 +110,7 @@ namespace Chess {
         if (root == nullptr || n > size)
             return nullptr;
 
-        uint64_t binaryTraversal = n;
+        uint64_t binaryTraversal = n; // Traversal method found at https://stackoverflow.com/questions/51506395/how-can-one-find-the-last-right-most-node-on-the-last-level-of-tree-which-is-a
         uint64_t leftMostMask = 0x8000000000000000;
         HeapNode* nth = root;
         unsigned int rotateCount = 0;
@@ -180,4 +180,5 @@ namespace Chess {
         while (!this->isEmpty())
             this->removeTop();
     }
+
 }
