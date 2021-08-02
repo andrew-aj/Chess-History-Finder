@@ -1,4 +1,4 @@
 .idea
 cmake-build-debug/*
 !cmake-build-debug/images
-!cmake-build-debug/times.ttf
+!cmake-build-debug/fonts

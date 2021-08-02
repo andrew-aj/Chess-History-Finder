@@ -479,7 +479,7 @@ namespace Chess {
 
     //Initialize the text and load in the font
     void GUI::initializeText() {
-        font.loadFromFile("times.ttf");
+        font.loadFromFile("fonts/TimesNewerRoman-Bold.otf");
 
         text.setFont(font);
 
