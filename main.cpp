@@ -5,7 +5,7 @@ using Chess::ZobristHash;
 
 int main(int argc, const char *argv[]) {
     // Start GUI with 1 argument: the preprocessed binary file to load in.
-    // Start preprocessor with 2 arguments: The raw pgn file and the preprecessed binary file to be outputted.
+    // Start preprocessor with 2 arguments: The raw pgn file and the preprocessed binary file to be outputted.
 
     /* Code to start GUI. */
     if (argc == 2) {
