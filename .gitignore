@@ -2,3 +2,6 @@
 cmake-build-debug/*
 !cmake-build-debug/images
 !cmake-build-debug/fonts
+cmake-build-release/*
+!cmake-build-release/images
+!cmake-build-release/fonts
